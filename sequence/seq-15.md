@@ -63,7 +63,7 @@ sequenceDiagram
                 학생UI->>안심: 12: 안전응답선택(학생ID: int)
                 Note over 안심: 위치 확인 정상 종료
             else 10분 내 미응답
-                안심->>프로필DB: 13: 학생비상연락정보조회(학생ID: int): StudentInfo
+                안심->>프로필DB: 13: 학생비상연락정보조회(학생ID: int): 학생비상연락정보
                 프로필DB-->>안심: 학생비상연락정보
                 안심-)앱운영자: 14: 긴급문자발송(이름: String, 학번: String, 비상연락처: String)
             end

@@ -35,7 +35,7 @@
 | 프로필DB | 학생 ID, 학번, 학과, MBTI, 관심사, 매너 점수, 계정 상태, 자택 위치, 비상 연락처 | PPT | ProfileDB.md |
 | 정지DB | 정지된 학생 ID, 정지 사유, 등록 시각 | PPT | SuspensionDB.md |
 | 가게DB | 가게 정보, 메뉴, 화장실 구성, 제휴 쿠폰 | PPT | StoreDB.md |
-| 모임DB | 모임 일정, 모집 정원, 기본 참가비, 모임 상태, 품앗이 참여 여부 | PPT | MeetingDB.md |
+| 모임DB | 가게 ID, 모임 일정, 모집 정원, 기본 참가비, 모임 상태, 품앗이 참여 여부 | PPT | MeetingDB.md |
 | 신청DB | 학생별 모임 신청, 신청 시각, 신청 상태 | PPT | ApplicationDB.md |
 | 결제DB | 참가비 결제, 환급, 정산 결과 | PPT | PaymentDB.md |
 | 관심등록DB | 관심 대상으로 등록한 학생 관계, 등록 시각 | PPT | InterestRegistrationDB.md |
@@ -122,6 +122,10 @@
 | 참가결과 | 학생ID, 모임ID, 결과 | 추가 | ParticipationResult.md |
 | 참가기록 | 참가횟수, 알림받은횟수 | 추가 | ParticipationRecord.md |
 | Point | 위도, 경도 | 추가 | Point.md |
+| 학생비상연락정보 | 이름, 학번, 비상연락처 | 추가 | StudentEmergencyContact.md |
+| 화장실구성 | 소변기수, 대변기수 | 추가 | ToiletConfig.md |
+| 화장실대기열현황 | 대기조수, 대기학생목록 | 추가 | ToiletQueueStatus.md |
+| 화장실대기학생 | 학생ID, 등록시각, 방광게이지 | 추가 | ToiletWaitStudent.md |
 
 ---
 

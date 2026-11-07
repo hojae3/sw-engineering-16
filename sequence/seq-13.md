@@ -35,8 +35,8 @@ sequenceDiagram
     participant 신청DB as 신청DB
     participant 결제DB as 결제DB
 
-    앱운영자->>+정지: 1: 신고심사(신고ID: int, 대상학생ID: int, 심사결과: 심사결과, 정지사유: String)
-    정지->>신고DB: 2: 심사결과저장(신고ID: int, 심사결과: 심사결과)
+    앱운영자->>+정지: 1: 신고심사(신고ID: int, 대상학생ID: int, 심사결과: 신고심사결과, 정지사유: String)
+    정지->>신고DB: 2: 심사결과저장(신고ID: int, 심사결과: 신고심사결과)
 
     alt 심사결과가 '반려'임
         Note over 정지: 처리를 종료한다
@@ -45,7 +45,8 @@ sequenceDiagram
         신고DB-->>정지: 누적유효건수
 
         alt 누적유효건수 3건 이상 또는 심사결과가 '중대위반'임
-            정지->>프로필DB: 4: 계정상태변경(학생ID: int, 상태: 계정상태.정지)
+            정지->>프로필DB: 4: 계정상태변경(학생ID: int, 상태: 계정상태)
+            Note over 정지: 4번은 '정지'로 바꾼다
             정지->>정지DB: 5: 정지저장(학생ID: int, 정지사유: String)
             정지-)학생UI: 6: 이용정지알림(학생ID: int, 정지사유: String)
             정지->>신청DB: 7: 미시작결제완료신청목록조회(학생ID: int): List<int>
@@ -53,7 +54,8 @@ sequenceDiagram
 
             alt 취소 대상 신청 건 존재
                 loop 신청 건마다
-                    정지->>신청DB: 8: 신청상태변경(학생ID: int, 모임ID: int, 상태: 신청상태.신청취소)
+                    정지->>신청DB: 8: 신청상태변경(학생ID: int, 모임ID: int, 상태: 신청상태)
+                    Note over 정지: 8번은 '신청취소'로 바꾼다
                     정지->>결제DB: 9: 참가비전액환급저장(학생ID: int, 모임ID: int)
                 end
             end

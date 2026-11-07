@@ -35,24 +35,24 @@ sequenceDiagram
 
     alt 학생 간 상호 QR 스캔
         학생UI->>+출석: 1: 상호QR스캔요청(학생1ID: int, 학생2QR토큰: String, 모임ID: int)
-        출석->>출석: 2: QR토큰검증(학생2QR토큰: String): boolean
+        출석->>출석: 2: QR토큰검증(QR토큰: String): boolean
         출석->>배치DB: 3: 학생배정모임조회(학생ID목록: List<int>): List<int>
         배치DB-->>출석: 배정모임목록
 
         alt 토큰 검증 실패 또는 배정 모임 불일치
-            출석-)학생UI: 4: 출석실패알림(사유: String)
+            출석-)학생UI: 4: 출석실패알림(학생ID: int, 사유: String)
             Note over 출석: 처리를 종료한다
         else 검증 성공 및 배정 모임 일치
             출석->>출석DB: 5: 상호출석기록저장(학생1ID: int, 학생2ID: int, 모임ID: int, 방식: 출석방식)
         end
     else 사장님 확인 스캔
         사장님UI->>출석: 6: 사장님확인스캔요청(사장님ID: int, 학생QR토큰: String, 모임ID: int)
-        출석->>출석: 7: QR토큰검증(학생QR토큰: String): boolean
+        출석->>출석: 7: QR토큰검증(QR토큰: String): boolean
         출석->>배치DB: 8: 학생배정모임조회(학생ID목록: List<int>): List<int>
         배치DB-->>출석: 배정모임목록
 
         alt 검증 실패
-            출석-)사장님UI: 9: 출석실패알림(사유: String)
+            출석-)사장님UI: 9: 출석실패알림(사장님ID: int, 사유: String)
             Note over 출석: 처리를 종료한다
         else 검증 성공
             출석->>출석DB: 10: 출석기록저장(학생ID: int, 모임ID: int, 방식: 출석방식)

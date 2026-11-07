@@ -60,7 +60,7 @@ sequenceDiagram
                 합석->>배치DB: 9: 추가의자갱신(모임ID: int, 테이블번호: int)
                 합석-)사장님UI: 10: 의자추가알림(모임ID: int, 테이블번호: int)
             else 대상 테이블 존재
-                합석->>배치DB: 11: 테이블번호갱신(학생ID: int, 새테이블번호: int)
+                합석->>배치DB: 11: 테이블번호갱신(학생ID: int, 모임ID: int, 새테이블번호: int)
                 합석-)학생UI: 12: 바뀐테이블번호알림(학생ID: int, 바뀐테이블번호: int)
             end
         end

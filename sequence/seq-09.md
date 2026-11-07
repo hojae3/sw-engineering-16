@@ -35,7 +35,8 @@ sequenceDiagram
     participant 학생UI as 학생UI
 
     시간->>+정산: 1: 모임종료시각도달(모임ID: int)
-    정산->>모임DB: 2: 모임상태변경(모임ID: int, 모임상태.종료)
+    정산->>모임DB: 2: 모임상태변경(모임ID: int, 상태: 모임상태)
+    Note over 정산: 2번은 '종료'로 바꾼다
     정산->>주문DB: 3: 주문마감(모임ID: int)
     정산->>배치DB: 4: 테이블목록조회(모임ID: int): List<int>
     배치DB-->>정산: 테이블목록
