@@ -24,6 +24,7 @@ requirements/         요구사항 명세 (req-번호.md)
 sequence/             시퀀스 다이어그램 (seq-번호.md, Mermaid)
 classes/              클래스 파일 (영어 이름, 클래스 하나당 파일 하나)
 usecase/              유스케이스 다이어그램 (전체 시스템 하나)
+class-diagram/        통합 클래스 다이어그램 (classes/를 모은 Mermaid 그림)
 docs/                 참고 자료 (팀 PPT PDF, 강의자료, Claude Docs 초안)
 CHECKLIST.md          push 전 체크리스트
 ```
