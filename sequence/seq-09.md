@@ -14,6 +14,7 @@
 | 자동정산 | 담당 객체 | classes/AutoSettlement.md |
 | 테이블출석현황 | 공통 객체 | classes/TableAttendanceStatus.md |
 | 모임DB | DB | classes/MeetingDB.md |
+| 배치DB | DB | classes/ArrangementDB.md |
 | 주문DB | DB | classes/OrderDB.md |
 | 결제DB | DB | classes/PaymentDB.md |
 | 학생UI | UI | classes/StudentUI.md |
@@ -28,6 +29,7 @@ sequenceDiagram
     participant 정산 as 자동정산
     participant 현황 as 테이블출석현황
     participant 모임DB as 모임DB
+    participant 배치DB as 배치DB
     participant 주문DB as 주문DB
     participant 결제DB as 결제DB
     participant 학생UI as 학생UI
@@ -35,8 +37,8 @@ sequenceDiagram
     시간->>+정산: 1: 모임종료시각도달(모임ID: int)
     정산->>모임DB: 2: 모임상태변경(모임ID: int, 모임상태.종료)
     정산->>주문DB: 3: 주문마감(모임ID: int)
-    정산->>모임DB: 4: 테이블목록조회(모임ID: int): List<int>
-    모임DB-->>정산: 테이블목록
+    정산->>배치DB: 4: 테이블목록조회(모임ID: int): List<int>
+    배치DB-->>정산: 테이블목록
     
     loop 테이블마다
         정산->>주문DB: 5: 테이블주문금액조회(모임ID: int, 테이블번호: int): int

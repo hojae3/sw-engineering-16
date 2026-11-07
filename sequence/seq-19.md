@@ -14,6 +14,7 @@
 | 숙취예보 | 담당 객체 | classes/HangoverForecast.md |
 | 테이블출석현황 | 공통 객체 | classes/TableAttendanceStatus.md |
 | 모임DB | DB | classes/MeetingDB.md |
+| 배치DB | DB | classes/ArrangementDB.md |
 | 주문DB | DB | classes/OrderDB.md |
 | 가게DB | DB | classes/StoreDB.md |
 | 학생UI | UI | classes/StudentUI.md |
@@ -28,6 +29,7 @@ sequenceDiagram
     participant 예보 as 숙취예보
     participant 현황 as 테이블출석현황
     participant 모임DB as 모임DB
+    participant 배치DB as 배치DB
     participant 주문DB as 주문DB
     participant 가게DB as 가게DB
     participant 학생UI as 학생UI
@@ -42,8 +44,8 @@ sequenceDiagram
         loop 종료 모임마다
             예보->>모임DB: 3: 모임종료시각조회(모임ID: int): datetime
             모임DB-->>예보: 모임종료시각
-            예보->>모임DB: 4: 테이블목록조회(모임ID: int): List<int>
-            모임DB-->>예보: 테이블목록
+            예보->>배치DB: 4: 테이블목록조회(모임ID: int): List<int>
+            배치DB-->>예보: 테이블목록
             loop 테이블마다
                 예보->>+현황: 5: 테이블출석학생목록조회(모임ID: int, 테이블번호: int): List<int>
                 현황-->>-예보: 테이블출석학생목록
