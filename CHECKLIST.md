@@ -8,6 +8,7 @@ main에 push하기 전에 바꾼 파일을 아래 항목으로 확인한다.
 - [ ] 모든 조건에 else 동작이 있다
 - [ ] 다른 기능을 실행·전달하는 표현이 없다 (Action, Pre/Post-condition, Side effects 모두)
 - [ ] Side effects가 시스템 영향이다
+- [ ] Pre-condition의 DB 상태를 만드는 요구사항이 있거나, 없으면 ASSUMED-FEATURES.md에 있다
 - [ ] 계산식을 한글로 풀어 썼다
 
 ### 시퀀스

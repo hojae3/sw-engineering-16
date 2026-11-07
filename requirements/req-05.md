@@ -56,6 +56,8 @@
 
 ## 정리할 것
 
+- (2026-11-08 검토) REVIEW.md 7번 수정안을 확인한다: Pre-condition의 QR 표시를 DB 상태로.
+
 - Action 3: 확인에 실패했을 때의 else 동작을 쓴다. 배정 모임은 어느 DB(배치DB 또는 신청DB)에서 조회하는지 쓴다.
 - Requirements·Pre-condition에서 다른 기능 이름을 빼고 DB 상태로 쓴다 (예: 배치DB에 해당 모임의 배치가 저장되어 있다).
 - Side effects를 시스템 영향으로 바꾼다 (예: 출석DB 기록 증가, 출석 가능 시간 동안 스캔 요청 집중).

@@ -25,6 +25,7 @@
 - 새 연산을 만들기 전에 해당 클래스 파일을 열어 재사용할 연산이 있는지 확인한다 (CONVENTIONS 6.4).
 - `docs/`의 팀 PPT(User_Requirement.pdf)와 Claude Docs 초안은 참고 자료다. 원본은 이 저장소의 파일이다.
 - 요구사항을 나눌 때는 시작 조건으로 나누고, 객체(책임)로 나누지 않는다.
+- Pre-condition에 쓴 DB 상태를 만드는 요구사항이 없으면 ASSUMED-FEATURES.md에 있는지 확인하고, 없으면 사용자에게 알린다.
 - 흔한 기능처럼 보여도 요구사항을 직접 빼거나 합치지 않는다. 후보와 이유를 제안하고 팀이 정하면 반영한다 (CONVENTIONS 4.6, FEEDBACK #4·#13).
 - 시퀀스 다이어그램은 Mermaid로 쓰고, 시작 메시지 규칙(사람→UI, 시각→시간 액터, 데이터 변화→Found Message)을 지킨다.
 
@@ -37,7 +38,7 @@
 | 새 객체·엔티티 | classes/ 파일 생성, GLOSSARY 등록 |
 | 새 용어·enum | GLOSSARY 등록 |
 | 기능 추가 | usecase/usecase.md, README 담당 표 |
-| 기능 삭제 (팀 결정 후) | requirements·sequence 파일 삭제, README 담당 표, usecase 줄(있다고 가정하는 기능이면 '없음 (흔한 기능)'으로 남김), GLOSSARY 담당 객체·사용처, 그 기능을 언급한 다른 요구사항. 번호는 다시 매기지 않는다 |
+| 기능 삭제 (팀 결정 후) | requirements·sequence 파일 삭제, README 담당 표, usecase 줄, GLOSSARY 담당 객체·사용처, 그 기능을 언급한 다른 요구사항. 번호는 다시 매기지 않는다 |
 
 ## 작업 끝나기 전에 확인
 

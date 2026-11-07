@@ -9,7 +9,9 @@
 2. [GLOSSARY.md](GLOSSARY.md) — 용어·객체·enum (여기 없는 말은 쓰지 않는다)
 3. [FEEDBACK.md](FEEDBACK.md) — 규칙의 근거가 된 피드백
 4. [DISCUSSION.md](DISCUSSION.md) — 팀이 정해야 할 안건 (의견 남기기)
-5. 예시: 20번 — [요구사항](requirements/req-20.md) · [시퀀스](sequence/seq-20.md) · [클래스](classes/SecondRoundAutoDecision.md)
+5. [ASSUMED-FEATURES.md](ASSUMED-FEATURES.md) — 명세 없이 있다고 가정한 흔한 기능 목록
+6. [REVIEW.md](REVIEW.md) — 검토 결과와 담당자별 수정안
+7. 예시: 20번 — [요구사항](requirements/req-20.md) · [시퀀스](sequence/seq-20.md) · [클래스](classes/SecondRoundAutoDecision.md)
 
 ## 폴더 구조
 
@@ -18,6 +20,8 @@ CONVENTIONS.md        작성 규칙
 GLOSSARY.md           용어 사전
 FEEDBACK.md           피드백 기록
 DISCUSSION.md         팀 상의 안건
+ASSUMED-FEATURES.md   가정한 흔한 기능 목록
+REVIEW.md             검토 결과와 수정안
 CLAUDE.md             Claude Code 작업 지침 (Claude Code가 자동으로 읽음)
 templates/            새 기능 시작용 템플릿 (requirement, sequence, class)
 requirements/         요구사항 명세 (req-번호.md)
