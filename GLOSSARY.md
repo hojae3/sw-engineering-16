@@ -47,7 +47,7 @@
 | 신고DB | 신고 내용, 신고 대상, 접수 상태 | PPT | ReportDB.md |
 | 설정DB | 모임별 종료 시각과 신고 여부 | PPT | |
 | 기부DB | 기부 참여 기록과 바통 정보 | PPT | DonationDB.md |
-| 품앗이DB | 가게 간 음식 교환 요청, 수락, 완료 내역 | PPT | FoodExchangeDB.md |
+| 품앗이DB | 모임 간 연합 가능 여부, 가게 간 음식 교환 요청, 수락, 완료 내역 | PPT | FoodExchangeDB.md |
 | 화장실대기열DB | 화장실 대기 조, 이용 상태, 마지막 이용 시각 | PPT | ToiletQueueDB.md |
 | 2차공지DB | 2차 공지의 대상 모임, 2차 장소, 시작 시각 | 추가 | SecondNoticeDB.md |
 | 2차기록DB | 학생별 2차 참가 여부와 과거 참가 기록 | PPT | SecondRecordDB.md |
