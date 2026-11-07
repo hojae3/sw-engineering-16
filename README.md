@@ -85,6 +85,7 @@ cd sw-engineering-16
 - GitHub에서 `sequence/seq-번호.md`를 열면 Mermaid가 바로 그림으로 보인다.
 - 로컬에서는 VS Code + "Markdown Preview Mermaid Support" 확장, 또는 [mermaid.live](https://mermaid.live)에 코드를 붙여 넣어 확인한다.
 - 그림이 안 나오면 문법 오류다. push 전에 꼭 확인한다.
+- 통합 클래스 다이어그램은 직접 고치지 않는다. `classes/`를 고친 뒤 `python class-diagram/generate.py`(macOS는 `python3`)로 다시 만든다.
 
 ### 4. Claude Code로 작업하기
 

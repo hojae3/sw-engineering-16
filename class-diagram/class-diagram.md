@@ -1,6 +1,8 @@
 # 통합 클래스 다이어그램
 
-`classes/`의 클래스 파일을 모은 그림이다 (CONVENTIONS 6.5). **원본은 `classes/` 파일이다.** 클래스를 고치면 이 파일도 같이 고친다. 제출할 때는 CONVENTIONS 8.2에 따라 StarUML 한 장으로 옮긴다.
+> 이 파일은 스크립트로 만든다. 직접 고치지 말고 `classes/`를 고친 뒤 다시 생성한다. 실행: `python class-diagram/generate.py` (macOS는 `python3`)
+
+`classes/`의 클래스 파일을 모은 그림이다 (CONVENTIONS 6.5). **원본은 `classes/` 파일이다.** 제출할 때는 CONVENTIONS 8.2에 따라 StarUML 한 장으로 옮긴다.
 
 ## 1. 클래스 개수 대조
 
