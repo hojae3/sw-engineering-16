@@ -192,15 +192,20 @@ PPT 2장부터 쓰는 그림이다. StarUML에서는 영역마다 다이어그�
 | PPT | 절 | 내용 |
 |---|---|---|
 | 1장 | 2장 전체 그림, 통합 다이어그램 | 53개, 이름만, 관계선 포함 |
-| 2장 | 3.1 | 모임 전 |
-| 3장 | 3.2 | 모임 중: 출석·교류 |
-| 4장 | 3.3 | 모임 중: 기부·품앗이·화장실 |
-| 5장 | 3.4 | 모임 후: 정산·평가·신고 |
-| 6장 | 3.5 | 모임 후: 귀가·예보·2차 |
-| 7장 | 3.6~3.9 | 공통 객체, 외부, DB |
-| 8장 | 3.10~3.11 | UI, 엔티티 |
+| 2장 | 3.1 | 모임 전 ① |
+| 3장 | 3.2 | 모임 전 ② |
+| 4장 | 3.3 | 모임 중: 출석·교류 |
+| 5장 | 3.4 | 모임 중: 기부·품앗이·화장실 |
+| 6장 | 3.5 | 모임 후: 정산·평가·신고 |
+| 7장 | 3.6 | 모임 후: 귀가·예보·2차 |
+| 8장 | 3.7, 3.8 | 공통 객체·외부, DB 회원·모임 |
+| 9장 | 3.9 | DB 모임 진행 |
+| 10장 | 3.10 | DB 평가·교류 |
+| 11장 | 3.11 | 사장님UI·엔티티 |
+| 12장 | 3.12 | 학생UI |
+| 슬라이드 아님 | 3.13 | 참고용: 공통 객체·DB·엔티티 사이의 관계선 |
 
-### 3.1 모임 전 (기능 1, 2-1, 2-2, 3, 4-2)
+### 3.1 모임 전 ① (기능 1, 2-1, 2-2)
 
 ```mermaid
 ---
@@ -237,6 +242,40 @@ classDiagram
         -참가비일치검증(결제금액: int, 학생ID: int) boolean
         -결제승인요청(결제금액: int) boolean
     }
+    class StoreDB["가게DB"]
+    class PaymentDB["결제DB"]
+    class MeetingDB["모임DB"]
+    class OwnerUI["사장님UI"]
+    class ApplicationDB["신청DB"]
+    class SuspensionDB["정지DB"]
+    class ProfileDB["프로필DB"]
+    class StudentUI["학생UI"]
+    MeetingNoticeRegistration -- StoreDB
+    PaymentAndApplicationConfirm -- PaymentDB
+    PaymentAndApplicationConfirm -- MeetingDB
+    PaymentAndApplicationConfirm -- ApplicationDB
+    PaymentAndApplicationConfirm -- ProfileDB
+    PaymentAndApplicationConfirm -- StudentUI
+    MeetingNoticeRegistration -- MeetingDB
+    ApplicationCheckAndFeeCalc -- MeetingDB
+    MeetingNoticeRegistration -- OwnerUI
+    MeetingNoticeRegistration -- StudentUI
+    ApplicationCheckAndFeeCalc -- ApplicationDB
+    ApplicationCheckAndFeeCalc -- SuspensionDB
+    ApplicationCheckAndFeeCalc -- ProfileDB
+    ApplicationCheckAndFeeCalc -- StudentUI
+```
+
+### 3.2 모임 전 ② (기능 3, 4-2)
+
+```mermaid
+---
+config:
+  class:
+    hideEmptyMembersBox: true
+---
+classDiagram
+    direction LR
     class CloseStudentNotification["친해지고싶은학생알림"] {
         -모임ID: int
         -대상학생ID: int
@@ -259,41 +298,23 @@ classDiagram
         -순환배정실행(정렬학생목록: List~int~) List~int~
         -이전만남쌍교환조정(배치목록: List~int~) List~int~
     }
-    class StoreDB["가게DB"]
-    class PaymentDB["결제DB"]
     class InterestRegistrationDB["관심등록DB"]
-    class MeetingDB["모임DB"]
     class ArrangementDB["배치DB"]
     class OwnerUI["사장님UI"]
     class ApplicationDB["신청DB"]
-    class SuspensionDB["정지DB"]
     class AttendanceDB["출석DB"]
     class ProfileDB["프로필DB"]
     class StudentUI["학생UI"]
-    MeetingNoticeRegistration -- StoreDB
-    PaymentAndApplicationConfirm -- PaymentDB
-    PaymentAndApplicationConfirm -- MeetingDB
-    PaymentAndApplicationConfirm -- ApplicationDB
-    PaymentAndApplicationConfirm -- ProfileDB
-    PaymentAndApplicationConfirm -- StudentUI
     CloseStudentNotification -- InterestRegistrationDB
-    MeetingNoticeRegistration -- MeetingDB
-    ApplicationCheckAndFeeCalc -- MeetingDB
-    MeetingNoticeRegistration -- OwnerUI
-    MeetingNoticeRegistration -- StudentUI
     SeatArrangementGeneration -- ArrangementDB
     SeatArrangementGeneration -- OwnerUI
-    ApplicationCheckAndFeeCalc -- ApplicationDB
     SeatArrangementGeneration -- ApplicationDB
-    ApplicationCheckAndFeeCalc -- SuspensionDB
-    ApplicationCheckAndFeeCalc -- ProfileDB
-    ApplicationCheckAndFeeCalc -- StudentUI
     SeatArrangementGeneration -- AttendanceDB
     SeatArrangementGeneration -- ProfileDB
     CloseStudentNotification -- StudentUI
 ```
 
-### 3.2 모임 중: 출석·교류 (기능 5, 6, 7, 8)
+### 3.3 모임 중: 출석·교류 (기능 5, 6, 7, 8)
 
 ```mermaid
 ---
@@ -369,7 +390,7 @@ classDiagram
     ProfileTopicCard -- StudentUI
 ```
 
-### 3.3 모임 중: 기부·품앗이·화장실 (기능 16, 17, 18-1, 18-2)
+### 3.4 모임 중: 기부·품앗이·화장실 (기능 16, 17, 18-1, 18-2)
 
 ```mermaid
 ---
@@ -455,7 +476,7 @@ classDiagram
     ToiletEntryExitManagement -- ToiletQueueDB
 ```
 
-### 3.4 모임 후: 정산·평가·신고 (기능 9, 10, 11, 12, 13)
+### 3.5 모임 후: 정산·평가·신고 (기능 9, 10, 11, 12, 13)
 
 ```mermaid
 ---
@@ -530,7 +551,7 @@ classDiagram
     CloseStudentRegistration -- StudentUI
 ```
 
-### 3.5 모임 후: 귀가·예보·2차 (기능 15, 19, 20)
+### 3.6 모임 후: 귀가·예보·2차 (기능 15, 19, 20)
 
 ```mermaid
 ---
@@ -606,7 +627,7 @@ classDiagram
     HangoverForecast -- StudentUI
 ```
 
-### 3.6 공통 객체·외부
+### 3.7 공통 객체·외부
 
 ```mermaid
 classDiagram
@@ -630,7 +651,7 @@ classDiagram
     }
 ```
 
-### 3.7 DB: 회원·모임
+### 3.8 DB: 회원·모임
 
 ```mermaid
 classDiagram
@@ -685,7 +706,7 @@ classDiagram
     }
 ```
 
-### 3.8 DB: 모임 진행
+### 3.9 DB: 모임 진행
 
 ```mermaid
 classDiagram
@@ -743,7 +764,7 @@ classDiagram
     }
 ```
 
-### 3.9 DB: 평가·교류
+### 3.10 DB: 평가·교류
 
 ```mermaid
 classDiagram
@@ -782,7 +803,7 @@ classDiagram
     }
 ```
 
-### 3.10 사장님UI·엔티티
+### 3.11 사장님UI·엔티티
 
 ```mermaid
 classDiagram
@@ -844,7 +865,7 @@ classDiagram
     }
 ```
 
-### 3.11 학생UI
+### 3.12 학생UI
 
 ```mermaid
 classDiagram
@@ -909,7 +930,7 @@ classDiagram
     }
 ```
 
-### 3.12 공통 객체·DB·엔티티 사이의 관계선
+### 3.13 공통 객체·DB·엔티티 사이의 관계선 (참고용)
 
 ```mermaid
 ---

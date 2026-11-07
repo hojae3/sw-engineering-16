@@ -96,21 +96,21 @@ def areafig(names):
     return code(L),shown
 out.append('## 3. 영역별 그림\n')
 out.append('PPT 2장부터 쓰는 그림이다. StarUML에서는 영역마다 다이어그램을 따로 만들고, Model Explorer의 기존 클래스를 끌어다 놓는다. 표기는 Mermaid 규칙에 따라 `List<int>`를 `List~int~`로 적지만 그림에는 `List<int>`로 나온다.\n')
-out.append('| PPT | 절 | 내용 |\n|---|---|---|\n| 1장 | 2장 전체 그림, 통합 다이어그램 | 53개, 이름만, 관계선 포함 |\n| 2장 | 3.1 | 모임 전 |\n| 3장 | 3.2 | 모임 중: 출석·교류 |\n| 4장 | 3.3 | 모임 중: 기부·품앗이·화장실 |\n| 5장 | 3.4 | 모임 후: 정산·평가·신고 |\n| 6장 | 3.5 | 모임 후: 귀가·예보·2차 |\n| 7장 | 3.6~3.9 | 공통 객체, 외부, DB |\n| 8장 | 3.10~3.11 | UI, 엔티티 |\n')
+out.append('| PPT | 절 | 내용 |\n|---|---|---|\n| 1장 | 2장 전체 그림, 통합 다이어그램 | 53개, 이름만, 관계선 포함 |\n| 2장 | 3.1 | 모임 전 ① |\n| 3장 | 3.2 | 모임 전 ② |\n| 4장 | 3.3 | 모임 중: 출석·교류 |\n| 5장 | 3.4 | 모임 중: 기부·품앗이·화장실 |\n| 6장 | 3.5 | 모임 후: 정산·평가·신고 |\n| 7장 | 3.6 | 모임 후: 귀가·예보·2차 |\n| 8장 | 3.7, 3.8 | 공통 객체·외부, DB 회원·모임 |\n| 9장 | 3.9 | DB 모임 진행 |\n| 10장 | 3.10 | DB 평가·교류 |\n| 11장 | 3.11 | 사장님UI·엔티티 |\n| 12장 | 3.12 | 학생UI |\n| 슬라이드 아님 | 3.13 | 참고용: 공통 객체·DB·엔티티 사이의 관계선 |\n')
 seen=set()
-for title,names in [('3.1 모임 전 (기능 1, 2-1, 2-2, 3, 4-2)',pick(PRE)),('3.2 모임 중: 출석·교류 (기능 5, 6, 7, 8)',pick(['5','6','7','8'])),('3.3 모임 중: 기부·품앗이·화장실 (기능 16, 17, 18-1, 18-2)',pick(['16','17','18-1','18-2'])),('3.4 모임 후: 정산·평가·신고 (기능 9, 10, 11, 12, 13)',pick(['9','10','11','12','13'])),('3.5 모임 후: 귀가·예보·2차 (기능 15, 19, 20)',pick(['15','19','20']))]:
+for title,names in [('3.1 모임 전 ① (기능 1, 2-1, 2-2)',pick(['1','2-1','2-2'])),('3.2 모임 전 ② (기능 3, 4-2)',pick(['3','4-2'])),('3.3 모임 중: 출석·교류 (기능 5, 6, 7, 8)',pick(['5','6','7','8'])),('3.4 모임 중: 기부·품앗이·화장실 (기능 16, 17, 18-1, 18-2)',pick(['16','17','18-1','18-2'])),('3.5 모임 후: 정산·평가·신고 (기능 9, 10, 11, 12, 13)',pick(['9','10','11','12','13'])),('3.6 모임 후: 귀가·예보·2차 (기능 15, 19, 20)',pick(['15','19','20']))]:
     c_,s=areafig(names); seen|=set(s); out.append(f'### {title}\n'); out.append(c_)
-out.append('### 3.6 공통 객체·외부\n'); out.append(detail(by['공통 객체']+by['외부']))
+out.append('### 3.7 공통 객체·외부\n'); out.append(detail(by['공통 객체']+by['외부']))
 for j,(t_,ns) in enumerate(DB):
-    out.append(f'### 3.{7+j} DB: {t_}\n'); out.append(detail(ns))
-out.append('### 3.10 사장님UI·엔티티\n'); out.append(detail(['사장님UI']+by['엔티티']))
-out.append('### 3.11 학생UI\n'); out.append(detail(['학생UI']))
+    out.append(f'### 3.{8+j} DB: {t_}\n'); out.append(detail(ns))
+out.append('### 3.11 사장님UI·엔티티\n'); out.append(detail(['사장님UI']+by['엔티티']))
+out.append('### 3.12 학생UI\n'); out.append(detail(['학생UI']))
 rest=sorted(edges-seen)
 use=sorted({x for e in rest for x in e})
 L=HEAD+['classDiagram','    direction LR']
 for n in use: L.append(f'    class {cl[n]["id"]}["{n}"]')
 for a,b in rest: L.append(f'    {cl[a]["id"]} -- {cl[b]["id"]}')
-out.append('### 3.12 공통 객체·DB·엔티티 사이의 관계선\n'); out.append(code(L))
+out.append('### 3.13 공통 객체·DB·엔티티 사이의 관계선 (참고용)\n'); out.append(code(L))
 assert seen|set(rest)==edges
 (ROOT/'class-diagram'/'class-diagram.md').write_text('\n'.join(out),encoding='utf-8',newline='\n')
 print('classes',len(cl),dict(ptn),'edges',len(edges),'rest',len(rest),'skipped',dict(skipped))
