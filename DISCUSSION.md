@@ -63,7 +63,7 @@ B·C안으로 나눈다면 이렇게 나눌 수 있다 (예시):
 
 ## 3. 유스케이스 include / extend 관계
 
-**상태:** 논의중
+**상태:** 결정
 
 **배경:** [usecase/usecase.md](usecase/usecase.md)의 include/extend 표가 "(팀에서 결정)"으로 비어 있다.
 
@@ -76,4 +76,4 @@ B·C안으로 나눈다면 이렇게 나눌 수 있다 (예시):
 
 - (이름) :
 
-**결정:**
+**결정:** 2026-11-08 (김호재). 2-2 «include» 2-1, 3 «extend» 2-2, 11 «extend» 10. 6의 의자 추가는 6 안의 분기라 그리지 않는다. 내용은 usecase/usecase.md
