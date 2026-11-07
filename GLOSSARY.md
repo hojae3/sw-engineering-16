@@ -33,22 +33,22 @@
 | 이름 | 저장 내용 | 상태 | 클래스 파일 |
 |---|---|---|---|
 | 프로필DB | 학생 ID, 학번, 학과, MBTI, 관심사, 매너 점수, 계정 상태, 자택 위치, 비상 연락처 | PPT | ProfileDB.md |
-| 정지DB | 정지된 학생 ID, 정지 사유, 등록 시각 | PPT | |
-| 가게DB | 가게 정보, 메뉴, 화장실 구성, 제휴 쿠폰 | PPT | |
-| 모임DB | 모임 일정, 모집 정원, 기본 참가비, 모임 상태, 품앗이 참여 여부 | PPT | |
-| 신청DB | 학생별 모임 신청, 신청 시각, 신청 상태 | PPT | |
-| 결제DB | 참가비 결제, 환급, 정산 결과 | PPT | |
+| 정지DB | 정지된 학생 ID, 정지 사유, 등록 시각 | PPT | SuspensionDB.md |
+| 가게DB | 가게 정보, 메뉴, 화장실 구성, 제휴 쿠폰 | PPT | StoreDB.md |
+| 모임DB | 모임 일정, 모집 정원, 기본 참가비, 모임 상태, 품앗이 참여 여부 | PPT | MeetingDB.md |
+| 신청DB | 학생별 모임 신청, 신청 시각, 신청 상태 | PPT | ApplicationDB.md |
+| 결제DB | 참가비 결제, 환급, 정산 결과 | PPT | PaymentDB.md |
 | 관심등록DB | 관심 대상으로 등록한 학생 관계, 등록 시각 | PPT | InterestRegistrationDB.md |
-| 배치DB | 테이블 배정, 합석 이력, 최종배치 | PPT | |
+| 배치DB | 테이블 배정, 합석 이력, 최종배치 | PPT | ArrangementDB.md |
 | 출석DB | QR 출석·사장님 확인 출석 기록, 출석 시각 | PPT | AttendanceDB.md |
-| 주문DB | 음식·주류 주문 내역, 금액, 추가 주문, 마감 상태 | PPT | |
-| 질문카드DB | 관심사 기반 대화 주제 카드 | PPT | |
-| 평가DB | 학생별 매너 평가 내역과 점수 | PPT | |
-| 신고DB | 신고 내용, 신고 대상, 접수 상태 | PPT | |
+| 주문DB | 음식·주류 주문 내역, 금액, 추가 주문, 마감 상태 | PPT | OrderDB.md |
+| 질문카드DB | 관심사 기반 대화 주제 카드 | PPT | QuestionCardDB.md |
+| 평가DB | 학생별 매너 평가 내역과 점수 | PPT | EvaluationDB.md |
+| 신고DB | 신고 내용, 신고 대상, 접수 상태 | PPT | ReportDB.md |
 | 설정DB | 모임별 종료 시각과 신고 여부 | PPT | |
-| 기부DB | 기부 참여 기록과 바통 정보 | PPT | |
-| 품앗이DB | 가게 간 음식 교환 요청, 수락, 완료 내역 | PPT | |
-| 화장실대기열DB | 화장실 대기 조, 이용 상태, 마지막 이용 시각 | PPT | |
+| 기부DB | 기부 참여 기록과 바통 정보 | PPT | DonationDB.md |
+| 품앗이DB | 가게 간 음식 교환 요청, 수락, 완료 내역 | PPT | FoodExchangeDB.md |
+| 화장실대기열DB | 화장실 대기 조, 이용 상태, 마지막 이용 시각 | PPT | ToiletQueueDB.md |
 | 2차공지DB | 2차 공지의 대상 모임, 2차 장소, 시작 시각 | 추가 | SecondNoticeDB.md |
 | 2차기록DB | 학생별 2차 참가 여부와 과거 참가 기록 | PPT | SecondRecordDB.md |
 
@@ -62,11 +62,26 @@
 
 | 기능 | 담당 객체 | 상태 | 클래스 파일 |
 |---|---|---|---|
+| 1 | 모임공지등록 | 추가 | MeetingNoticeRegistration.md |
+| 2-1 | 신청확인및참가비계산 | 추가 | ApplicationCheckAndFeeCalc.md |
+| 2-2 | 결제및신청확정 | 추가 | PaymentAndApplicationConfirm.md |
 | 3 | 친해지고싶은학생알림 | 추가 | CloseStudentNotification.md |
-| 4-2 | 자리배치생성 | 추가 | |
-| 6 | 1인잔류테이블합석 | 추가 | |
-| 18-1 | 대기등록및조편성 | 추가 | |
-| 18-2 | 입장및퇴실관리 | 추가 | |
+| 4-2 | 자리배치생성 | 추가 | SeatArrangementGeneration.md |
+| 5 | QR출석 | 추가 | QRAttendance.md |
+| 6 | 1인잔류테이블합석 | 추가 | SinglePersonTableMerge.md |
+| 7 | 프로필기반대화주제카드 | 추가 | ProfileTopicCard.md |
+| 8 | 블라인드프로필공개 | 추가 | BlindProfileDisclosure.md |
+| 9 | 자동정산 | 추가 | AutoSettlement.md |
+| 10 | 만난사람평가 | 추가 | MeetingEvaluation.md |
+| 11 | 친해지고싶은학생등록 | 추가 | CloseStudentRegistration.md |
+| 12 | 비매너학생신고 | 추가 | MannerReport.md |
+| 13 | 비매너학생이용정지 | 추가 | MannerSuspension.md |
+| 15 | 당일안심귀가 | 추가 | SafeReturnHome.md |
+| 16 | 기부릴레이잇기 | 추가 | DonationRelay.md |
+| 17 | 가게연합음식품앗이 | 추가 | StoreFoodExchange.md |
+| 18-1 | 화장실대기및조편성 | 추가 | ToiletWaitAndGroup.md |
+| 18-2 | 화장실입장및퇴실관리 | 추가 | ToiletEntryExitManagement.md |
+| 19 | 숙취예보 | 추가 | HangoverForecast.md |
 | 20 | 2차참가자동결정 | 추가 | SecondRoundAutoDecision.md |
 
 ---
@@ -80,7 +95,7 @@
 | 이름 | 하는 일 | 쓰는 기능 | 상태 | 클래스 파일 |
 |---|---|---|---|---|
 | 귀가시간계산 | 현재 위치와 자택 위치로 추정 이동 시간을 계산 | 15, 20 | 추가 | ReturnHomeTimeCalc.md |
-| 테이블출석현황 | 배치DB·출석DB로 테이블별 출석 학생, 출석 인원, 빈 좌석을 집계 | 5, 6, 7, 8, 10, 11, 12, 16, 18-1, 19 | 추가 | TableAttendanceStatus.md (작성 예정) |
+| 테이블출석현황 | 배치DB·출석DB로 테이블별 출석 학생, 출석 인원, 빈 좌석을 집계 | 5, 6, 7, 8, 10, 11, 12, 16, 18-1, 19 | 추가 | TableAttendanceStatus.md |
 | 환급처리 | 결제DB를 통해 참가비를 환급하고 기록 | 2-2, 9, 13 | 후보 | |
 | 술주문집계 | 기준 시각 이후 테이블의 술 주문 병 수를 집계 | 18-1, 19 | 후보 | |
 | 학번해석 | 학번 앞 네 자리로 입학 연도·학년 계산 | 2-1, 4-2 | 후보 (작아서 담당 객체에 둘 수도 있음) | |
