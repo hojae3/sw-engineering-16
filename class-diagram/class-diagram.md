@@ -185,292 +185,29 @@ flowchart TB
     G5 ~~~ G6
 ```
 
-## 3. 관계 그림
+## 3. 영역별 그림
 
-연결된 클래스를 이름만 보여 준다. 관계선은 화살표 없는 실선이다 (CONVENTIONS 6.3).
+PPT 2장부터 쓰는 그림이다. StarUML에서는 영역마다 다이어그램을 따로 만들고, Model Explorer의 기존 클래스를 끌어다 놓는다. 표기는 Mermaid 규칙에 따라 `List<int>`를 `List~int~`로 적지만 그림에는 `List<int>`로 나온다.
+
+| PPT | 절 | 내용 |
+|---|---|---|
+| 1장 | 2장 전체 그림, 통합 다이어그램 | 53개, 이름만, 관계선 포함 |
+| 2장 | 3.1 | 모임 전 |
+| 3장 | 3.2 | 모임 중: 출석·교류 |
+| 4장 | 3.3 | 모임 중: 기부·품앗이·화장실 |
+| 5장 | 3.4 | 모임 후: 정산·평가·신고 |
+| 6장 | 3.5 | 모임 후: 귀가·예보·2차 |
+| 7장 | 3.6~3.9 | 공통 객체, 외부, DB |
+| 8장 | 3.10~3.11 | UI, 엔티티 |
 
 ### 3.1 모임 전 (기능 1, 2-1, 2-2, 3, 4-2)
 
 ```mermaid
-classDiagram
-    direction LR
-    class StoreDB["가게DB"]
-    class PaymentDB["결제DB"]
-    class PaymentAndApplicationConfirm["결제및신청확정"]
-    class InterestRegistrationDB["관심등록DB"]
-    class MeetingDB["모임DB"]
-    class MeetingNoticeRegistration["모임공지등록"]
-    class ArrangementDB["배치DB"]
-    class OwnerUI["사장님UI"]
-    class ApplicationDB["신청DB"]
-    class ApplicationCheckAndFeeCalc["신청확인및참가비계산"]
-    class SeatArrangementGeneration["자리배치생성"]
-    class SuspensionDB["정지DB"]
-    class AttendanceDB["출석DB"]
-    class CloseStudentNotification["친해지고싶은학생알림"]
-    class ProfileDB["프로필DB"]
-    class StudentUI["학생UI"]
-    StoreDB -- MeetingNoticeRegistration
-    PaymentDB -- PaymentAndApplicationConfirm
-    PaymentAndApplicationConfirm -- MeetingDB
-    PaymentAndApplicationConfirm -- ApplicationDB
-    PaymentAndApplicationConfirm -- ProfileDB
-    PaymentAndApplicationConfirm -- StudentUI
-    InterestRegistrationDB -- CloseStudentNotification
-    MeetingDB -- MeetingNoticeRegistration
-    MeetingDB -- ApplicationCheckAndFeeCalc
-    MeetingNoticeRegistration -- OwnerUI
-    MeetingNoticeRegistration -- StudentUI
-    ArrangementDB -- SeatArrangementGeneration
-    OwnerUI -- SeatArrangementGeneration
-    ApplicationDB -- ApplicationCheckAndFeeCalc
-    ApplicationDB -- SeatArrangementGeneration
-    ApplicationCheckAndFeeCalc -- SuspensionDB
-    ApplicationCheckAndFeeCalc -- ProfileDB
-    ApplicationCheckAndFeeCalc -- StudentUI
-    SeatArrangementGeneration -- AttendanceDB
-    SeatArrangementGeneration -- ProfileDB
-    CloseStudentNotification -- StudentUI
-```
-
-### 3.2 모임 중: 출석·합석·교류 (기능 5, 6, 7, 8)
-
-```mermaid
-classDiagram
-    direction LR
-    class SinglePersonTableMerge["1인잔류테이블합석"]
-    class QRAttendance["QR출석"]
-    class MeetingDB["모임DB"]
-    class ArrangementDB["배치DB"]
-    class BlindProfileDisclosure["블라인드프로필공개"]
-    class OwnerUI["사장님UI"]
-    class OrderDB["주문DB"]
-    class QuestionCardDB["질문카드DB"]
-    class AttendanceDB["출석DB"]
-    class TableAttendanceStatus["테이블출석현황"]
-    class ProfileDB["프로필DB"]
-    class ProfileTopicCard["프로필기반대화주제카드"]
-    class StudentUI["학생UI"]
-    SinglePersonTableMerge -- MeetingDB
-    SinglePersonTableMerge -- ArrangementDB
-    SinglePersonTableMerge -- OwnerUI
-    SinglePersonTableMerge -- TableAttendanceStatus
-    SinglePersonTableMerge -- ProfileDB
-    SinglePersonTableMerge -- StudentUI
-    QRAttendance -- ArrangementDB
-    QRAttendance -- OwnerUI
-    QRAttendance -- OrderDB
-    QRAttendance -- AttendanceDB
-    QRAttendance -- TableAttendanceStatus
-    QRAttendance -- StudentUI
-    BlindProfileDisclosure -- TableAttendanceStatus
-    BlindProfileDisclosure -- ProfileDB
-    BlindProfileDisclosure -- StudentUI
-    QuestionCardDB -- ProfileTopicCard
-    TableAttendanceStatus -- ProfileTopicCard
-    ProfileDB -- ProfileTopicCard
-    ProfileTopicCard -- StudentUI
-```
-
-### 3.3 모임 중: 기부·품앗이·화장실 (기능 16, 17, 18-1, 18-2)
-
-```mermaid
-classDiagram
-    direction LR
-    class StoreDB["가게DB"]
-    class StoreFoodExchange["가게연합음식품앗이"]
-    class DonationDB["기부DB"]
-    class DonationRelay["기부릴레이잇기"]
-    class MeetingDB["모임DB"]
-    class ArrangementDB["배치DB"]
-    class OwnerUI["사장님UI"]
-    class OrderDB["주문DB"]
-    class AttendanceDB["출석DB"]
-    class TableAttendanceStatus["테이블출석현황"]
-    class FoodExchangeDB["품앗이DB"]
-    class StudentUI["학생UI"]
-    class ToiletConfig["화장실구성"]
-    class ToiletWaitAndGroup["화장실대기및조편성"]
-    class ToiletQueueDB["화장실대기열DB"]
-    class ToiletQueueStatus["화장실대기열현황"]
-    class ToiletWaitStudent["화장실대기학생"]
-    class ToiletEntryExitManagement["화장실입장및퇴실관리"]
-    StoreDB -- ToiletWaitAndGroup
-    StoreDB -- ToiletEntryExitManagement
-    StoreFoodExchange -- MeetingDB
-    StoreFoodExchange -- OwnerUI
-    StoreFoodExchange -- OrderDB
-    StoreFoodExchange -- AttendanceDB
-    StoreFoodExchange -- FoodExchangeDB
-    StoreFoodExchange -- StudentUI
-    DonationDB -- DonationRelay
-    DonationRelay -- ArrangementDB
-    DonationRelay -- AttendanceDB
-    DonationRelay -- TableAttendanceStatus
-    DonationRelay -- StudentUI
-    MeetingDB -- ToiletWaitAndGroup
-    MeetingDB -- ToiletEntryExitManagement
-    ArrangementDB -- ToiletWaitAndGroup
-    OwnerUI -- ToiletEntryExitManagement
-    OrderDB -- ToiletWaitAndGroup
-    AttendanceDB -- ToiletWaitAndGroup
-    TableAttendanceStatus -- ToiletWaitAndGroup
-    StudentUI -- ToiletWaitAndGroup
-    StudentUI -- ToiletEntryExitManagement
-    ToiletConfig -- ToiletWaitAndGroup
-    ToiletConfig -- ToiletEntryExitManagement
-    ToiletWaitAndGroup -- ToiletQueueDB
-    ToiletWaitAndGroup -- ToiletQueueStatus
-    ToiletWaitAndGroup -- ToiletWaitStudent
-    ToiletQueueDB -- ToiletEntryExitManagement
-```
-
-### 3.4 모임 후: 정산·평가·신고 (기능 9, 10, 11, 12, 13)
-
-```mermaid
-classDiagram
-    direction LR
-    class PaymentDB["결제DB"]
-    class InterestRegistrationDB["관심등록DB"]
-    class MeetingEvaluation["만난사람평가"]
-    class MeetingDB["모임DB"]
-    class ArrangementDB["배치DB"]
-    class MannerReport["비매너학생신고"]
-    class MannerSuspension["비매너학생이용정지"]
-    class ReportDB["신고DB"]
-    class ApplicationDB["신청DB"]
-    class AutoSettlement["자동정산"]
-    class SuspensionDB["정지DB"]
-    class OrderDB["주문DB"]
-    class AttendanceDB["출석DB"]
-    class CloseStudentRegistration["친해지고싶은학생등록"]
-    class TableAttendanceStatus["테이블출석현황"]
-    class EvaluationDB["평가DB"]
-    class ProfileDB["프로필DB"]
-    class StudentUI["학생UI"]
-    PaymentDB -- MannerSuspension
-    PaymentDB -- AutoSettlement
-    InterestRegistrationDB -- CloseStudentRegistration
-    MeetingEvaluation -- AttendanceDB
-    MeetingEvaluation -- TableAttendanceStatus
-    MeetingEvaluation -- EvaluationDB
-    MeetingEvaluation -- ProfileDB
-    MeetingEvaluation -- StudentUI
-    MeetingDB -- AutoSettlement
-    ArrangementDB -- AutoSettlement
-    MannerReport -- ReportDB
-    MannerReport -- TableAttendanceStatus
-    MannerReport -- ProfileDB
-    MannerReport -- StudentUI
-    MannerSuspension -- ReportDB
-    MannerSuspension -- ApplicationDB
-    MannerSuspension -- SuspensionDB
-    MannerSuspension -- ProfileDB
-    MannerSuspension -- StudentUI
-    AutoSettlement -- OrderDB
-    AutoSettlement -- TableAttendanceStatus
-    AutoSettlement -- StudentUI
-    CloseStudentRegistration -- TableAttendanceStatus
-    CloseStudentRegistration -- ProfileDB
-    CloseStudentRegistration -- StudentUI
-```
-
-### 3.5 모임 후: 귀가·예보·2차 (기능 15, 19, 20)
-
-```mermaid
-classDiagram
-    direction LR
-    class SecondNotice["2차공지"]
-    class SecondNoticeDB["2차공지DB"]
-    class SecondRecordDB["2차기록DB"]
-    class SecondRoundAutoDecision["2차참가자동결정"]
-    class StoreDB["가게DB"]
-    class ReturnHomeTimeCalc["귀가시간계산"]
-    class SafeReturnHome["당일안심귀가"]
-    class MeetingDB["모임DB"]
-    class ArrangementDB["배치DB"]
-    class OwnerUI["사장님UI"]
-    class HangoverForecast["숙취예보"]
-    class OrderDB["주문DB"]
-    class ParticipationResult["참가결과"]
-    class ParticipationRecord["참가기록"]
-    class ParticipationResponse["참가응답"]
-    class AttendanceDB["출석DB"]
-    class TableAttendanceStatus["테이블출석현황"]
-    class ProfileDB["프로필DB"]
-    class StudentUI["학생UI"]
-    class StudentEmergencyContact["학생비상연락정보"]
-    SecondNotice -- SecondRoundAutoDecision
-    SecondNoticeDB -- SecondRoundAutoDecision
-    SecondRecordDB -- SecondRoundAutoDecision
-    SecondRoundAutoDecision -- ReturnHomeTimeCalc
-    SecondRoundAutoDecision -- OwnerUI
-    SecondRoundAutoDecision -- ParticipationResult
-    SecondRoundAutoDecision -- ParticipationRecord
-    SecondRoundAutoDecision -- ParticipationResponse
-    SecondRoundAutoDecision -- AttendanceDB
-    SecondRoundAutoDecision -- StudentUI
-    StoreDB -- HangoverForecast
-    ReturnHomeTimeCalc -- SafeReturnHome
-    SafeReturnHome -- MeetingDB
-    SafeReturnHome -- AttendanceDB
-    SafeReturnHome -- ProfileDB
-    SafeReturnHome -- StudentUI
-    SafeReturnHome -- StudentEmergencyContact
-    MeetingDB -- HangoverForecast
-    ArrangementDB -- HangoverForecast
-    HangoverForecast -- OrderDB
-    HangoverForecast -- TableAttendanceStatus
-    HangoverForecast -- StudentUI
-```
-
-### 3.6 공통 객체·DB·엔티티 사이
-
-```mermaid
-classDiagram
-    direction LR
-    class SecondNotice["2차공지"]
-    class SecondNoticeDB["2차공지DB"]
-    class SecondRecordDB["2차기록DB"]
-    class Point["Point"]
-    class StoreDB["가게DB"]
-    class ReturnHomeTimeCalc["귀가시간계산"]
-    class DeviceLocation["단말기위치정보"]
-    class ArrangementDB["배치DB"]
-    class ParticipationResult["참가결과"]
-    class ParticipationRecord["참가기록"]
-    class AttendanceDB["출석DB"]
-    class TableAttendanceStatus["테이블출석현황"]
-    class ProfileDB["프로필DB"]
-    class StudentEmergencyContact["학생비상연락정보"]
-    class ToiletConfig["화장실구성"]
-    class ToiletQueueDB["화장실대기열DB"]
-    class ToiletQueueStatus["화장실대기열현황"]
-    class ToiletWaitStudent["화장실대기학생"]
-    SecondNotice -- SecondNoticeDB
-    SecondRecordDB -- ParticipationResult
-    SecondRecordDB -- ParticipationRecord
-    Point -- ReturnHomeTimeCalc
-    Point -- DeviceLocation
-    Point -- ProfileDB
-    StoreDB -- ToiletConfig
-    ReturnHomeTimeCalc -- DeviceLocation
-    ReturnHomeTimeCalc -- ProfileDB
-    ArrangementDB -- TableAttendanceStatus
-    AttendanceDB -- TableAttendanceStatus
-    ProfileDB -- StudentEmergencyContact
-    ToiletQueueDB -- ToiletQueueStatus
-    ToiletQueueDB -- ToiletWaitStudent
-    ToiletQueueStatus -- ToiletWaitStudent
-```
-
-## 4. 상세 그림
-
-속성과 연산을 종류별로 보여 준다. 표기는 Mermaid 규칙에 따라 `List<int>`를 `List~int~`로 적지만 그림에는 `List<int>`로 나온다.
-
-### 4.1 담당 객체: 모임 전
-
-```mermaid
+---
+config:
+  class:
+    hideEmptyMembersBox: true
+---
 classDiagram
     direction LR
     class MeetingNoticeRegistration["모임공지등록"] {
@@ -522,11 +259,48 @@ classDiagram
         -순환배정실행(정렬학생목록: List~int~) List~int~
         -이전만남쌍교환조정(배치목록: List~int~) List~int~
     }
+    class StoreDB["가게DB"]
+    class PaymentDB["결제DB"]
+    class InterestRegistrationDB["관심등록DB"]
+    class MeetingDB["모임DB"]
+    class ArrangementDB["배치DB"]
+    class OwnerUI["사장님UI"]
+    class ApplicationDB["신청DB"]
+    class SuspensionDB["정지DB"]
+    class AttendanceDB["출석DB"]
+    class ProfileDB["프로필DB"]
+    class StudentUI["학생UI"]
+    MeetingNoticeRegistration -- StoreDB
+    PaymentAndApplicationConfirm -- PaymentDB
+    PaymentAndApplicationConfirm -- MeetingDB
+    PaymentAndApplicationConfirm -- ApplicationDB
+    PaymentAndApplicationConfirm -- ProfileDB
+    PaymentAndApplicationConfirm -- StudentUI
+    CloseStudentNotification -- InterestRegistrationDB
+    MeetingNoticeRegistration -- MeetingDB
+    ApplicationCheckAndFeeCalc -- MeetingDB
+    MeetingNoticeRegistration -- OwnerUI
+    MeetingNoticeRegistration -- StudentUI
+    SeatArrangementGeneration -- ArrangementDB
+    SeatArrangementGeneration -- OwnerUI
+    ApplicationCheckAndFeeCalc -- ApplicationDB
+    SeatArrangementGeneration -- ApplicationDB
+    ApplicationCheckAndFeeCalc -- SuspensionDB
+    ApplicationCheckAndFeeCalc -- ProfileDB
+    ApplicationCheckAndFeeCalc -- StudentUI
+    SeatArrangementGeneration -- AttendanceDB
+    SeatArrangementGeneration -- ProfileDB
+    CloseStudentNotification -- StudentUI
 ```
 
-### 4.2 담당 객체: 모임 중
+### 3.2 모임 중: 출석·교류 (기능 5, 6, 7, 8)
 
 ```mermaid
+---
+config:
+  class:
+    hideEmptyMembersBox: true
+---
 classDiagram
     direction LR
     class QRAttendance["QR출석"] {
@@ -565,6 +339,46 @@ classDiagram
         -동의기록및집계(학생ID: int, 현재단계: int) int
         -동의상태초기화(테이블번호: int)
     }
+    class MeetingDB["모임DB"]
+    class ArrangementDB["배치DB"]
+    class OwnerUI["사장님UI"]
+    class OrderDB["주문DB"]
+    class QuestionCardDB["질문카드DB"]
+    class AttendanceDB["출석DB"]
+    class TableAttendanceStatus["테이블출석현황"]
+    class ProfileDB["프로필DB"]
+    class StudentUI["학생UI"]
+    SinglePersonTableMerge -- MeetingDB
+    SinglePersonTableMerge -- ArrangementDB
+    SinglePersonTableMerge -- OwnerUI
+    SinglePersonTableMerge -- TableAttendanceStatus
+    SinglePersonTableMerge -- ProfileDB
+    SinglePersonTableMerge -- StudentUI
+    QRAttendance -- ArrangementDB
+    QRAttendance -- OwnerUI
+    QRAttendance -- OrderDB
+    QRAttendance -- AttendanceDB
+    QRAttendance -- TableAttendanceStatus
+    QRAttendance -- StudentUI
+    BlindProfileDisclosure -- TableAttendanceStatus
+    BlindProfileDisclosure -- ProfileDB
+    BlindProfileDisclosure -- StudentUI
+    ProfileTopicCard -- QuestionCardDB
+    ProfileTopicCard -- TableAttendanceStatus
+    ProfileTopicCard -- ProfileDB
+    ProfileTopicCard -- StudentUI
+```
+
+### 3.3 모임 중: 기부·품앗이·화장실 (기능 16, 17, 18-1, 18-2)
+
+```mermaid
+---
+config:
+  class:
+    hideEmptyMembersBox: true
+---
+classDiagram
+    direction LR
     class DonationRelay["기부릴레이잇기"] {
         -참여인원: int
         +최종배치저장됨(모임ID: int)
@@ -597,11 +411,58 @@ classDiagram
         +해결완료선택(학생ID: int, 모임ID: int)
         +빈상태확인(모임ID: int)
     }
+    class StoreDB["가게DB"]
+    class DonationDB["기부DB"]
+    class MeetingDB["모임DB"]
+    class ArrangementDB["배치DB"]
+    class OwnerUI["사장님UI"]
+    class OrderDB["주문DB"]
+    class AttendanceDB["출석DB"]
+    class TableAttendanceStatus["테이블출석현황"]
+    class FoodExchangeDB["품앗이DB"]
+    class StudentUI["학생UI"]
+    class ToiletConfig["화장실구성"]
+    class ToiletQueueDB["화장실대기열DB"]
+    class ToiletQueueStatus["화장실대기열현황"]
+    class ToiletWaitStudent["화장실대기학생"]
+    ToiletWaitAndGroup -- StoreDB
+    ToiletEntryExitManagement -- StoreDB
+    StoreFoodExchange -- MeetingDB
+    StoreFoodExchange -- OwnerUI
+    StoreFoodExchange -- OrderDB
+    StoreFoodExchange -- AttendanceDB
+    StoreFoodExchange -- FoodExchangeDB
+    StoreFoodExchange -- StudentUI
+    DonationRelay -- DonationDB
+    DonationRelay -- ArrangementDB
+    DonationRelay -- AttendanceDB
+    DonationRelay -- TableAttendanceStatus
+    DonationRelay -- StudentUI
+    ToiletWaitAndGroup -- MeetingDB
+    ToiletEntryExitManagement -- MeetingDB
+    ToiletWaitAndGroup -- ArrangementDB
+    ToiletEntryExitManagement -- OwnerUI
+    ToiletWaitAndGroup -- OrderDB
+    ToiletWaitAndGroup -- AttendanceDB
+    ToiletWaitAndGroup -- TableAttendanceStatus
+    ToiletWaitAndGroup -- StudentUI
+    ToiletEntryExitManagement -- StudentUI
+    ToiletWaitAndGroup -- ToiletConfig
+    ToiletEntryExitManagement -- ToiletConfig
+    ToiletWaitAndGroup -- ToiletQueueDB
+    ToiletWaitAndGroup -- ToiletQueueStatus
+    ToiletWaitAndGroup -- ToiletWaitStudent
+    ToiletEntryExitManagement -- ToiletQueueDB
 ```
 
-### 4.3 담당 객체: 모임 후
+### 3.4 모임 후: 정산·평가·신고 (기능 9, 10, 11, 12, 13)
 
 ```mermaid
+---
+config:
+  class:
+    hideEmptyMembersBox: true
+---
 classDiagram
     direction LR
     class AutoSettlement["자동정산"] {
@@ -629,6 +490,56 @@ classDiagram
     class MannerSuspension["비매너학생이용정지"] {
         +신고심사(신고ID: int, 대상학생ID: int, 심사결과: 신고심사결과, 정지사유: String)
     }
+    class PaymentDB["결제DB"]
+    class InterestRegistrationDB["관심등록DB"]
+    class MeetingDB["모임DB"]
+    class ArrangementDB["배치DB"]
+    class ReportDB["신고DB"]
+    class ApplicationDB["신청DB"]
+    class SuspensionDB["정지DB"]
+    class OrderDB["주문DB"]
+    class AttendanceDB["출석DB"]
+    class TableAttendanceStatus["테이블출석현황"]
+    class EvaluationDB["평가DB"]
+    class ProfileDB["프로필DB"]
+    class StudentUI["학생UI"]
+    MannerSuspension -- PaymentDB
+    AutoSettlement -- PaymentDB
+    CloseStudentRegistration -- InterestRegistrationDB
+    MeetingEvaluation -- AttendanceDB
+    MeetingEvaluation -- TableAttendanceStatus
+    MeetingEvaluation -- EvaluationDB
+    MeetingEvaluation -- ProfileDB
+    MeetingEvaluation -- StudentUI
+    AutoSettlement -- MeetingDB
+    AutoSettlement -- ArrangementDB
+    MannerReport -- ReportDB
+    MannerReport -- TableAttendanceStatus
+    MannerReport -- ProfileDB
+    MannerReport -- StudentUI
+    MannerSuspension -- ReportDB
+    MannerSuspension -- ApplicationDB
+    MannerSuspension -- SuspensionDB
+    MannerSuspension -- ProfileDB
+    MannerSuspension -- StudentUI
+    AutoSettlement -- OrderDB
+    AutoSettlement -- TableAttendanceStatus
+    AutoSettlement -- StudentUI
+    CloseStudentRegistration -- TableAttendanceStatus
+    CloseStudentRegistration -- ProfileDB
+    CloseStudentRegistration -- StudentUI
+```
+
+### 3.5 모임 후: 귀가·예보·2차 (기능 15, 19, 20)
+
+```mermaid
+---
+config:
+  class:
+    hideEmptyMembersBox: true
+---
+classDiagram
+    direction LR
     class SafeReturnHome["당일안심귀가"] {
         -모임종료시각: datetime
         -귀가마감시각: datetime
@@ -654,9 +565,48 @@ classDiagram
         -불참결정(학생ID: int)
         -참가여부결정(과거2차참가율: double, 이번참가비율: double) 2차참가결과
     }
+    class SecondNotice["2차공지"]
+    class SecondNoticeDB["2차공지DB"]
+    class SecondRecordDB["2차기록DB"]
+    class StoreDB["가게DB"]
+    class ReturnHomeTimeCalc["귀가시간계산"]
+    class MeetingDB["모임DB"]
+    class ArrangementDB["배치DB"]
+    class OwnerUI["사장님UI"]
+    class OrderDB["주문DB"]
+    class ParticipationResult["참가결과"]
+    class ParticipationRecord["참가기록"]
+    class ParticipationResponse["참가응답"]
+    class AttendanceDB["출석DB"]
+    class TableAttendanceStatus["테이블출석현황"]
+    class ProfileDB["프로필DB"]
+    class StudentUI["학생UI"]
+    class StudentEmergencyContact["학생비상연락정보"]
+    SecondRoundAutoDecision -- SecondNotice
+    SecondRoundAutoDecision -- SecondNoticeDB
+    SecondRoundAutoDecision -- SecondRecordDB
+    SecondRoundAutoDecision -- ReturnHomeTimeCalc
+    SecondRoundAutoDecision -- OwnerUI
+    SecondRoundAutoDecision -- ParticipationResult
+    SecondRoundAutoDecision -- ParticipationRecord
+    SecondRoundAutoDecision -- ParticipationResponse
+    SecondRoundAutoDecision -- AttendanceDB
+    SecondRoundAutoDecision -- StudentUI
+    HangoverForecast -- StoreDB
+    SafeReturnHome -- ReturnHomeTimeCalc
+    SafeReturnHome -- MeetingDB
+    SafeReturnHome -- AttendanceDB
+    SafeReturnHome -- ProfileDB
+    SafeReturnHome -- StudentUI
+    SafeReturnHome -- StudentEmergencyContact
+    HangoverForecast -- MeetingDB
+    HangoverForecast -- ArrangementDB
+    HangoverForecast -- OrderDB
+    HangoverForecast -- TableAttendanceStatus
+    HangoverForecast -- StudentUI
 ```
 
-### 4.4 공통 객체·외부
+### 3.6 공통 객체·외부
 
 ```mermaid
 classDiagram
@@ -680,7 +630,7 @@ classDiagram
     }
 ```
 
-### 4.5 DB: 회원·모임
+### 3.7 DB: 회원·모임
 
 ```mermaid
 classDiagram
@@ -735,7 +685,7 @@ classDiagram
     }
 ```
 
-### 4.6 DB: 모임 진행
+### 3.8 DB: 모임 진행
 
 ```mermaid
 classDiagram
@@ -793,7 +743,7 @@ classDiagram
     }
 ```
 
-### 4.7 DB: 평가·교류
+### 3.9 DB: 평가·교류
 
 ```mermaid
 classDiagram
@@ -832,7 +782,7 @@ classDiagram
     }
 ```
 
-### 4.8 UI
+### 3.10 사장님UI·엔티티
 
 ```mermaid
 classDiagram
@@ -852,6 +802,53 @@ classDiagram
         +품앗이완료알림(모임ID: int, 교환ID: int)
         +화장실확인요청알림(모임ID: int)
     }
+    class ParticipationRecord["참가기록"] {
+        -참가횟수: int
+        -알림받은횟수: int
+    }
+    class ParticipationResponse["참가응답"] {
+        -학생ID: int
+        -선택: 참가선택
+    }
+    class ParticipationResult["참가결과"] {
+        -학생ID: int
+        -모임ID: int
+        -결과: 2차참가결과
+    }
+    class Point["Point"] {
+        -위도: double
+        -경도: double
+    }
+    class SecondNotice["2차공지"] {
+        -대상모임ID: int
+        -2차장소: String
+        -시작시각: datetime
+    }
+    class StudentEmergencyContact["학생비상연락정보"] {
+        -이름: String
+        -학번: String
+        -비상연락처: String
+    }
+    class ToiletConfig["화장실구성"] {
+        -소변기수: int
+        -대변기수: int
+    }
+    class ToiletQueueStatus["화장실대기열현황"] {
+        -대기조수: int
+        -대기학생목록: List~화장실대기학생~
+    }
+    class ToiletWaitStudent["화장실대기학생"] {
+        -학생ID: int
+        -등록시각: datetime
+        -방광게이지: double
+    }
+```
+
+### 3.11 학생UI
+
+```mermaid
+classDiagram
+    direction LR
     class StudentUI["학생UI"] {
         +참가선택요청(학생ID목록: List~int~, 2차장소: String, 시작시각: datetime)
         +결과알림(학생ID: int, 결과: 2차참가결과)
@@ -912,49 +909,47 @@ classDiagram
     }
 ```
 
-### 4.9 엔티티
+### 3.12 공통 객체·DB·엔티티 사이의 관계선
 
 ```mermaid
+---
+config:
+  class:
+    hideEmptyMembersBox: true
+---
 classDiagram
     direction LR
-    class ParticipationRecord["참가기록"] {
-        -참가횟수: int
-        -알림받은횟수: int
-    }
-    class ParticipationResponse["참가응답"] {
-        -학생ID: int
-        -선택: 참가선택
-    }
-    class ParticipationResult["참가결과"] {
-        -학생ID: int
-        -모임ID: int
-        -결과: 2차참가결과
-    }
-    class Point["Point"] {
-        -위도: double
-        -경도: double
-    }
-    class SecondNotice["2차공지"] {
-        -대상모임ID: int
-        -2차장소: String
-        -시작시각: datetime
-    }
-    class StudentEmergencyContact["학생비상연락정보"] {
-        -이름: String
-        -학번: String
-        -비상연락처: String
-    }
-    class ToiletConfig["화장실구성"] {
-        -소변기수: int
-        -대변기수: int
-    }
-    class ToiletQueueStatus["화장실대기열현황"] {
-        -대기조수: int
-        -대기학생목록: List~화장실대기학생~
-    }
-    class ToiletWaitStudent["화장실대기학생"] {
-        -학생ID: int
-        -등록시각: datetime
-        -방광게이지: double
-    }
+    class SecondNotice["2차공지"]
+    class SecondNoticeDB["2차공지DB"]
+    class SecondRecordDB["2차기록DB"]
+    class Point["Point"]
+    class StoreDB["가게DB"]
+    class ReturnHomeTimeCalc["귀가시간계산"]
+    class DeviceLocation["단말기위치정보"]
+    class ArrangementDB["배치DB"]
+    class ParticipationResult["참가결과"]
+    class ParticipationRecord["참가기록"]
+    class AttendanceDB["출석DB"]
+    class TableAttendanceStatus["테이블출석현황"]
+    class ProfileDB["프로필DB"]
+    class StudentEmergencyContact["학생비상연락정보"]
+    class ToiletConfig["화장실구성"]
+    class ToiletQueueDB["화장실대기열DB"]
+    class ToiletQueueStatus["화장실대기열현황"]
+    class ToiletWaitStudent["화장실대기학생"]
+    SecondNotice -- SecondNoticeDB
+    SecondRecordDB -- ParticipationResult
+    SecondRecordDB -- ParticipationRecord
+    Point -- ReturnHomeTimeCalc
+    Point -- DeviceLocation
+    Point -- ProfileDB
+    StoreDB -- ToiletConfig
+    ReturnHomeTimeCalc -- DeviceLocation
+    ReturnHomeTimeCalc -- ProfileDB
+    ArrangementDB -- TableAttendanceStatus
+    AttendanceDB -- TableAttendanceStatus
+    ProfileDB -- StudentEmergencyContact
+    ToiletQueueDB -- ToiletQueueStatus
+    ToiletQueueDB -- ToiletWaitStudent
+    ToiletQueueStatus -- ToiletWaitStudent
 ```

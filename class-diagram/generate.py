@@ -83,21 +83,34 @@ for k in order:
 out.append('\n## 2. 전체 그림\n')
 out.append('53개 클래스의 이름만 종류별로 묶었다. 관계선은 3장에서 본다.\n')
 out.append(overall)
-out.append('## 3. 관계 그림\n')
-out.append('연결된 클래스를 이름만 보여 준다. 관계선은 화살표 없는 실선이다 (CONVENTIONS 6.3).\n')
+HEAD=['---','config:','  class:','    hideEmptyMembersBox: true','---']
+def areafig(names):
+    S=set(names); shown=[e for e in sorted(edges) if e[0] in S or e[1] in S]
+    others=sorted({x for e in shown for x in e}-S)
+    L=HEAD+['classDiagram','    direction LR']
+    for n in names: L+=box(n)
+    for n in others: L.append(f'    class {cl[n]["id"]}["{n}"]')
+    for a,b in shown:
+        if a not in S: a,b=b,a  # 담당 객체를 왼쪽에 모은다
+        L.append(f'    {cl[a]["id"]} -- {cl[b]["id"]}')
+    return code(L),shown
+out.append('## 3. 영역별 그림\n')
+out.append('PPT 2장부터 쓰는 그림이다. StarUML에서는 영역마다 다이어그램을 따로 만들고, Model Explorer의 기존 클래스를 끌어다 놓는다. 표기는 Mermaid 규칙에 따라 `List<int>`를 `List~int~`로 적지만 그림에는 `List<int>`로 나온다.\n')
+out.append('| PPT | 절 | 내용 |\n|---|---|---|\n| 1장 | 2장 전체 그림, 통합 다이어그램 | 53개, 이름만, 관계선 포함 |\n| 2장 | 3.1 | 모임 전 |\n| 3장 | 3.2 | 모임 중: 출석·교류 |\n| 4장 | 3.3 | 모임 중: 기부·품앗이·화장실 |\n| 5장 | 3.4 | 모임 후: 정산·평가·신고 |\n| 6장 | 3.5 | 모임 후: 귀가·예보·2차 |\n| 7장 | 3.6~3.9 | 공통 객체, 외부, DB |\n| 8장 | 3.10~3.11 | UI, 엔티티 |\n')
 seen=set()
-for title,names in [('3.1 모임 전 (기능 1, 2-1, 2-2, 3, 4-2)',pick(PRE)),('3.2 모임 중: 출석·합석·교류 (기능 5, 6, 7, 8)',pick(['5','6','7','8'])),('3.3 모임 중: 기부·품앗이·화장실 (기능 16, 17, 18-1, 18-2)',pick(['16','17','18-1','18-2'])),('3.4 모임 후: 정산·평가·신고 (기능 9, 10, 11, 12, 13)',pick(['9','10','11','12','13'])),('3.5 모임 후: 귀가·예보·2차 (기능 15, 19, 20)',pick(['15','19','20']))]:
-    c_,s=relfig(names); seen|=set(s); out.append(f'### {title}\n'); out.append(c_)
+for title,names in [('3.1 모임 전 (기능 1, 2-1, 2-2, 3, 4-2)',pick(PRE)),('3.2 모임 중: 출석·교류 (기능 5, 6, 7, 8)',pick(['5','6','7','8'])),('3.3 모임 중: 기부·품앗이·화장실 (기능 16, 17, 18-1, 18-2)',pick(['16','17','18-1','18-2'])),('3.4 모임 후: 정산·평가·신고 (기능 9, 10, 11, 12, 13)',pick(['9','10','11','12','13'])),('3.5 모임 후: 귀가·예보·2차 (기능 15, 19, 20)',pick(['15','19','20']))]:
+    c_,s=areafig(names); seen|=set(s); out.append(f'### {title}\n'); out.append(c_)
+out.append('### 3.6 공통 객체·외부\n'); out.append(detail(by['공통 객체']+by['외부']))
+for j,(t_,ns) in enumerate(DB):
+    out.append(f'### 3.{7+j} DB: {t_}\n'); out.append(detail(ns))
+out.append('### 3.10 사장님UI·엔티티\n'); out.append(detail(['사장님UI']+by['엔티티']))
+out.append('### 3.11 학생UI\n'); out.append(detail(['학생UI']))
 rest=sorted(edges-seen)
 use=sorted({x for e in rest for x in e})
-L=['classDiagram','    direction LR']
+L=HEAD+['classDiagram','    direction LR']
 for n in use: L.append(f'    class {cl[n]["id"]}["{n}"]')
 for a,b in rest: L.append(f'    {cl[a]["id"]} -- {cl[b]["id"]}')
-out.append('### 3.6 공통 객체·DB·엔티티 사이\n'); out.append(code(L))
+out.append('### 3.12 공통 객체·DB·엔티티 사이의 관계선\n'); out.append(code(L))
 assert seen|set(rest)==edges
-out.append('## 4. 상세 그림\n')
-out.append('속성과 연산을 종류별로 보여 준다. 표기는 Mermaid 규칙에 따라 `List<int>`를 `List~int~`로 적지만 그림에는 `List<int>`로 나온다.\n')
-for title,names in [('4.1 담당 객체: 모임 전',pick(PRE)),('4.2 담당 객체: 모임 중',pick(MID)),('4.3 담당 객체: 모임 후',pick(POST)),('4.4 공통 객체·외부',by['공통 객체']+by['외부'])]+[(f'4.{5+j} DB: {t}',ns) for j,(t,ns) in enumerate(DB)]+[('4.8 UI',by['UI']),('4.9 엔티티',by['엔티티'])]:
-    out.append(f'### {title}\n'); out.append(detail(names))
 (ROOT/'class-diagram'/'class-diagram.md').write_text('\n'.join(out),encoding='utf-8',newline='\n')
 print('classes',len(cl),dict(ptn),'edges',len(edges),'rest',len(rest),'skipped',dict(skipped))
