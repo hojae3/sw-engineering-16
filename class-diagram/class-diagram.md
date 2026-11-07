@@ -37,9 +37,9 @@
 | 15 | 당일안심귀가 | 담당 객체 (기능 15) | [SafeReturnHome.md](../classes/SafeReturnHome.md) |
 | 16 | 기부릴레이잇기 | 담당 객체 (기능 16) | [DonationRelay.md](../classes/DonationRelay.md) |
 | 17 | 가게연합음식품앗이 | 담당 객체 (기능 17) | [StoreFoodExchange.md](../classes/StoreFoodExchange.md) |
-| 18 | 화장실대기및조편성 | 담당 객체 (기능 18-1) | [ToiletWaitAndGroup.md](../classes/ToiletWaitAndGroup.md) |
+| 18 | 화장실대기등록및조편성 | 담당 객체 (기능 18-1) | [ToiletWaitAndGroup.md](../classes/ToiletWaitAndGroup.md) |
 | 19 | 화장실입장및퇴실관리 | 담당 객체 (기능 18-2) | [ToiletEntryExitManagement.md](../classes/ToiletEntryExitManagement.md) |
-| 20 | 숙취예보 | 담당 객체 (기능 19) | [HangoverForecast.md](../classes/HangoverForecast.md) |
+| 20 | 모임다음날숙취예보 | 담당 객체 (기능 19) | [HangoverForecast.md](../classes/HangoverForecast.md) |
 | 21 | 2차참가자동결정 | 담당 객체 (기능 20) | [SecondRoundAutoDecision.md](../classes/SecondRoundAutoDecision.md) |
 | 22 | 귀가시간계산 | 공통 객체 | [ReturnHomeTimeCalc.md](../classes/ReturnHomeTimeCalc.md) |
 | 23 | 테이블출석현황 | 공통 객체 | [TableAttendanceStatus.md](../classes/TableAttendanceStatus.md) |
@@ -98,9 +98,9 @@ flowchart TB
         SafeReturnHome["당일안심귀가"]
         DonationRelay["기부릴레이잇기"]
         StoreFoodExchange["가게연합음식품앗이"]
-        ToiletWaitAndGroup["화장실대기및조편성"]
+        ToiletWaitAndGroup["화장실대기등록및조편성"]
         ToiletEntryExitManagement["화장실입장및퇴실관리"]
-        HangoverForecast["숙취예보"]
+        HangoverForecast["모임다음날숙취예보"]
         SecondRoundAutoDecision["2차참가자동결정"]
         MeetingNoticeRegistration ~~~ QRAttendance
         ApplicationCheckAndFeeCalc ~~~ SinglePersonTableMerge
@@ -419,7 +419,7 @@ classDiagram
         +교환수락선택(교환ID: int)
         +수령확인선택(학생ID: int, 교환ID: int)
     }
-    class ToiletWaitAndGroup["화장실대기및조편성"] {
+    class ToiletWaitAndGroup["화장실대기등록및조편성"] {
         -기준시각: datetime
         -대기학생목록: List~화장실대기학생~
         +소변입장신청(학생ID: int, 모임ID: int)
@@ -568,7 +568,7 @@ classDiagram
         +안전응답선택(학생ID: int)
         -귀가마감시각계산(모임종료시각: datetime, 추정이동시간: int) datetime
     }
-    class HangoverForecast["숙취예보"] {
+    class HangoverForecast["모임다음날숙취예보"] {
         -모임종료시각: datetime
         -숙취지수: int
         +익일08시도달()

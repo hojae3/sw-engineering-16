@@ -79,9 +79,9 @@
 | 15 | 당일안심귀가 | 추가 | SafeReturnHome.md |
 | 16 | 기부릴레이잇기 | 추가 | DonationRelay.md |
 | 17 | 가게연합음식품앗이 | 추가 | StoreFoodExchange.md |
-| 18-1 | 화장실대기및조편성 | 추가 | ToiletWaitAndGroup.md |
+| 18-1 | 화장실대기등록및조편성 | 추가 | ToiletWaitAndGroup.md |
 | 18-2 | 화장실입장및퇴실관리 | 추가 | ToiletEntryExitManagement.md |
-| 19 | 숙취예보 | 추가 | HangoverForecast.md |
+| 19 | 모임다음날숙취예보 | 추가 | HangoverForecast.md |
 | 20 | 2차참가자동결정 | 추가 | SecondRoundAutoDecision.md |
 
 ---

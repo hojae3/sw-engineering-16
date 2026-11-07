@@ -11,7 +11,7 @@
 
 | 객체 | 종류 | 클래스 파일 |
 |---|---|---|
-| 숙취예보 | 담당 객체 | classes/HangoverForecast.md |
+| 모임다음날숙취예보 | 담당 객체 | classes/HangoverForecast.md |
 | 테이블출석현황 | 공통 객체 | classes/TableAttendanceStatus.md |
 | 모임DB | DB | classes/MeetingDB.md |
 | 배치DB | DB | classes/ArrangementDB.md |
@@ -26,7 +26,7 @@
 ```mermaid
 sequenceDiagram
     actor 시간
-    participant 예보 as 숙취예보
+    participant 예보 as 모임다음날숙취예보
     participant 현황 as 테이블출석현황
     participant 모임DB as 모임DB
     participant 배치DB as 배치DB
