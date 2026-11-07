@@ -38,13 +38,14 @@
 
 **Post-condition:** (PPT에서 잘림, 확인 필요)
 
-**Side effects:** (PPT에서 잘림, 확인 필요)
+**Side effects:** 품앗이DB에 음식 교환 요청 및 수령 상태가 기록·갱신되며, 교환 진행 상태 변경 시 양쪽 가게 사장님UI에 알림이 전송된다.
 
 ## PPT에 추가·수정할 항목
 
 | PPT 위치 | 종류 | 내용 |
 |---|---|---|
 | 전체 | 표기 변경 | 학생 UI → 학생UI, '교환 확정' → '교환확정', '교환 완료' → '교환완료', 안내한다 → 알린다 |
+| Side effects | 내용 보완 | 잘린 항목 채움: 품앗이DB 기록·갱신 및 교환 상태 변경 알림 전송 명시 |
 
 ## 정리할 것
 
@@ -52,7 +53,7 @@
 - Action 1에 시작 조건을 쓴다 (예: 출석한 학생이 학생UI에서 교환할 음식과 수량을 등록하면).
 - Action 5: 한 학생만 수령 확인했을 때의 else 동작(기다림 또는 기한)을 쓴다.
 - Requirements·Pre-condition에서 다른 기능 이름을 빼고 DB 상태로 쓴다 (예: 모임DB의 품앗이 참여 여부가 양쪽 모두 참여이다).
-- Pre-condition, Post-condition, Side effects가 PPT 23쪽에서 잘렸다. 원본에서 확인해 채운다.
+- Pre-condition, Post-condition이 PPT 23쪽에서 잘렸다. 원본에서 확인해 채운다.
 
 ## 작성 전 체크
 
@@ -61,7 +62,7 @@
 - [ ] 모든 조건에 else 동작이 있다
 - [ ] 다른 기능을 실행·전달하는 표현이 없다
 - [ ] Pre/Post-condition이 DB 상태로 쓰였다
-- [ ] Side effects가 시스템 영향이다
+- [x] Side effects가 시스템 영향이다
 - [ ] 계산식을 한글로 풀어 썼다
 - [ ] 새 용어를 GLOSSARY에 등록했다
 - [ ] PPT와 달라진 내용을 'PPT에 추가·수정할 항목' 표에 적었다
