@@ -986,3 +986,573 @@ classDiagram
     ToiletQueueDB -- ToiletWaitStudent
     ToiletQueueStatus -- ToiletWaitStudent
 ```
+
+## 4. StarUML 옮겨 적기
+
+StarUML에 옮길 때 그대로 적는 표기다 (CONVENTIONS 8.1, 8.2). 매개변수 이름을 빼고 자료형만 적으며, enum 타입(모임상태, 신청상태, 계정상태, 출석방식, 화장실상태, 화장실대기상태, 신고심사결과, 교환상태, 참가선택, 2차참가결과)은 `String`으로 적는다. 속성 이름, 엔티티 이름, `List<타입>`은 그대로 둔다. 순서는 3장 영역별 그림과 같다.
+
+### 4.1 담당 객체: 모임 전 ①
+
+```text
+모임공지등록
+-모임ID: int
+-사장님ID: int
+-가게ID: int
+-요청식별자: String
++모임공지등록요청(int, int, String, datetime, datetime, int, int, boolean, String)
+-공지입력값검증(int, int, datetime, datetime): boolean
+```
+
+```text
+신청확인및참가비계산
+-학생ID: int
+-모임ID: int
+-학년: int
+-학년가중치: double
+-최종참가비: int
++신청하기선택(int, int)
+-학년계산(String): int
+-학년가중치결정(int): double
+-참가비계산(int, double): int
+```
+
+```text
+결제및신청확정
+-학생ID: int
+-모임ID: int
+-결제금액: int
++결제요청(int, int, int)
+-참가비일치검증(int, int): boolean
+```
+
+### 4.2 담당 객체: 모임 전 ②
+
+```text
+친해지고싶은학생알림
+-모임ID: int
+-대상학생ID: int
+-관심등록학생목록: List<int>
+-알림확률: double
+-발송대상목록: List<int>
++결제완료저장됨(int, int)
+-알림확률계산(int): double
+-발송대상선정(List<int>, double): List<int>
++알림선택(int, int)
+```
+
+```text
+자리배치생성
+-모임ID: int
+-선발학생수: int
+-테이블수: int
++모집마감상태변경됨(int)
+-이전만남쌍목록생성(List<int>, List<int>): List<int>
+-테이블수및정원계산(int): int
+-학생정렬(List<int>): List<int>
+-순환배정실행(List<int>): List<int>
+-이전만남쌍교환조정(List<int>): List<int>
+```
+
+### 4.3 담당 객체: 출석·교류
+
+```text
+QR출석
+-모임ID: int
+-학생ID: int
+-테이블번호: int
++상호QR스캔요청(int, String, int)
++사장님확인스캔요청(int, String, int)
+-QR토큰검증(String): boolean
+```
+
+```text
+1인잔류테이블합석
+-모임ID: int
+-1인잔류테이블목록: List<int>
++출석가능시간종료됨(int)
+-대상테이블선정(int, List<int>): int
+```
+
+```text
+프로필기반대화주제카드
+-모임ID: int
+-테이블번호: int
+-사용한태그목록: List<String>
+-같은테이블출석학생목록: List<int>
+-현재관심사태그: String
+-추측답목록: List<int>
+-정답학생목록: List<int>
++대화카드시작선택(int, int, int)
++추측답제출(int, int)
++그만하기선택(int)
++다음카드선택(int)
+-질문태그선택(List<String>, List<String>): String
+```
+
+```text
+블라인드프로필공개
+-모임ID: int
+-테이블번호: int
+-현재단계: int
++정보공개동의(int, int, int, int)
+```
+
+### 4.4 담당 객체: 기부·품앗이·화장실
+
+```text
+기부릴레이잇기
+-참여인원: int
++최종배치저장됨(int)
++릴레이잇기선택(int, int)
++기부참여거절선택(int, int)
++기부참여선택(int, int, int)
+-참여인원계산(int): int
+```
+
+```text
+가게연합음식품앗이
+-교환ID: int
+-모임ID: int
+-상대모임ID: int
+-학생ID: int
+-상대학생ID: int
++음식품앗이등록제출(int, int, int, int, String, int)
++교환거절선택(int)
++교환수락선택(int)
++수령확인선택(int, int)
+```
+
+```text
+화장실대기등록및조편성
+-기준시각: datetime
+-대기학생목록: List<화장실대기학생>
++소변입장신청(int, int)
+-방광게이지계산(int, int): double
+-대기조편성(List<화장실대기학생>, int): List<int>
+```
+
+```text
+화장실입장및퇴실관리
+-입장학생목록: List<int>
++화장실비어있음저장됨(int)
++해결완료선택(int, int)
++빈상태확인(int)
+```
+
+### 4.5 담당 객체: 정산·평가·신고
+
+```text
+자동정산
++모임종료시각도달(int)
+-환급액계산(int, int, int): int
+```
+
+```text
+만난사람평가
+-갱신전매너점수목록: List<double>
++모임종료저장됨(int)
++평가완료선택(int, int, List<int>, List<int>)
+-매너점수계산(double, List<int>, List<double>): double
+```
+
+```text
+친해지고싶은학생등록
++평가저장됨(int, int)
++건너뛰기선택(int)
++친해지기선택(int, int)
+```
+
+```text
+비매너학생신고
++비매너학생신고선택(int, int)
++신고건너뛰기선택(int)
++신고하기선택(int, int)
++신고제출(int, int, int, String, String)
+-신고입력값검증(String, String): boolean
+```
+
+```text
+비매너학생이용정지
++신고심사(int, int, String, String)
+```
+
+### 4.6 담당 객체: 귀가·예보·2차
+
+```text
+당일안심귀가
+-모임종료시각: datetime
+-귀가마감시각: datetime
++모임종료저장됨(int)
++안전응답선택(int)
+-귀가마감시각계산(datetime, int): datetime
+```
+
+```text
+모임다음날숙취예보
+-모임종료시각: datetime
+-숙취지수: int
++익일08시도달()
+-숙취지수계산(int, int, datetime): int
+```
+
+```text
+2차참가자동결정
+-모임ID: int
+-응답목록: List<참가응답>
+-이번참가비율: double
+-결과목록: List<참가결과>
++2차공지등록됨(int)
++참가응답제출(int, String)
+-응답별결정(List<참가응답>)
+-참가비율계산(int, int): double
+-불참결정(int)
+-참가여부결정(double, double): String
+```
+
+### 4.7 공통 객체·외부
+
+```text
+귀가시간계산
+-굴곡계수: double = 1.3
+-도보기준거리: double = 1.5
+-도보속도: double = 4
+-차량속도: double = 25
++이동시간추정(int): int
+-이동시간계산(Point, Point): int
+```
+
+```text
+테이블출석현황
++테이블출석인원조회(int, int): int
++테이블별출석조회(int): List<int>
++같은테이블학생조회(int, int): List<int>
++테이블출석학생목록조회(int, int): List<int>
+```
+
+```text
+단말기위치정보
++현재위치조회(int): Point
+```
+
+```text
+결제서비스
++결제승인요청(int): boolean
+```
+
+### 4.8 DB: 회원·모임
+
+```text
+프로필DB
++자택위치조회(int): Point
++계정상태조회(int): String
++학번조회(int): String
++학생학과학번목록조회(List<int>): List<String>
++관심사태그목록조회(List<int>): List<String>
++관심사보유학생조회(List<int>, String): List<int>
++남은관심사태그여부조회(List<int>, List<String>): boolean
++단계별프로필항목조회(List<int>, int): List<String>
++프로필사진조회(int): String
++매너점수조회(int): double
++매너점수갱신(int, double)
++계정상태변경(int, String)
++학생비상연락정보조회(int): 학생비상연락정보
+```
+
+```text
+정지DB
++정지기록조회(int): boolean
++정지저장(int, String)
+```
+
+```text
+가게DB
++가게등록여부조회(int, int): boolean
++화장실설비구성조회(int): 화장실구성
++제휴쿠폰조회(int): String
+```
+
+```text
+모임DB
++중복요청조회(String): boolean
++모임공지저장(int, String, datetime, datetime, int, int, boolean, String): int
++모임상태조회(int): String
++시작시각조회(int): datetime
++기본참가비조회(int): int
++모임상태변경(int, String)
++가게ID조회(int): int
++시작전모임목록조회(): List<int>
++모임종료시각조회(int): datetime
++전일종료모임목록조회(): List<int>
+```
+
+```text
+신청DB
++중복신청조회(int, int): boolean
++신청저장(int, int, String)
++선발학생목록조회(int): List<int>
++미시작신청목록조회(int, List<int>): List<int>
++신청상태변경(int, int, String)
+```
+
+```text
+결제DB
++결제승인기록저장(int, int, int)
++테이블참가비합조회(int, int): int
++환급액저장(int, int, int)
++참가비전액환급저장(int, int)
+```
+
+### 4.9 DB: 모임 진행
+
+```text
+관심등록DB
++관심등록학생조회(int): List<int>
++관심등록여부조회(int, int): boolean
++관심등록저장(int, int)
+```
+
+```text
+배치DB
++배치조회(int): List<int>
++이전모임테이블조회(List<int>): List<int>
++배치저장(int, List<int>)
++테이블목록조회(int): List<int>
++최종배치저장(int, List<int>)
++학생배정모임조회(List<int>): List<int>
++학생테이블번호조회(int, int): int
++테이블배치및의자조회(int): List<int>
++추가의자갱신(int, int)
++동의학생저장(int, int, int, int)
++동의학생수조회(int, int, int): int
++동의상태변경(int, int, int)
++공개단계갱신(int, int, int)
++테이블번호갱신(int, int, int)
+```
+
+```text
+출석DB
++출석학생조회(int): List<int>
++이전출석기록조회(List<int>): List<int>
++상호출석기록저장(int, int, int, String)
++출석기록저장(int, int, String)
++테이블출석조회(int, int): List<int>
++출석시각조회(int, int): datetime
++출석여부조회(int, int): boolean
+```
+
+```text
+주문DB
++주문가능상태갱신(int, int)
++주문마감(int)
++테이블주문금액조회(int, int): int
++주문잔량조회(int, String): int
++특정시각이후술주문병수조회(int, int, datetime): int
++테이블술주문병수조회(int, int): int
+```
+
+```text
+질문카드DB
++관심사질문카드조회(String): String
+```
+
+```text
+화장실대기열DB
++대기상태조회(int, int): String
++마지막이용시각조회(int, int): datetime
++대기등록(int, int, double): int
++대기조수및대기목록조회(int): 화장실대기열현황
++대기조상태변경(List<int>, int)
++첫번째대기조조회(int): List<int>
++선착순대기학생목록조회(int, int): List<int>
++화장실상태변경(int, String)
++학생상태변경(List<int>, String)
++다음대기조앞당김(int)
++해결완료기록및전원완료여부조회(int, int): boolean
++퇴실처리및화장실비어있음갱신(int, datetime)
+```
+
+### 4.10 DB: 평가·교류
+
+```text
+평가DB
++평가저장(int, int, List<int>, List<int>)
++테이블평가전원제출여부조회(List<int>, int): boolean
++받은점수목록조회(int, List<int>, int): List<int>
+```
+
+```text
+신고DB
++신고저장(int, int, int, String, String): int
++심사결과저장(int, String)
++누적유효신고건수조회(int): int
+```
+
+```text
+기부DB
++바통보유여부조회(int): boolean
++모임참여이력조회(int, int): boolean
++기부기록및새바통저장(int, int)
++기존바통회수(int)
+```
+
+```text
+품앗이DB
++취소제외교환수량조회(int, String): int
++연합가능여부조회(int, int): boolean
++교환요청저장(int, int, int, int, String, int): int
++교환상태갱신(int, String)
++교환상태조회(int): String
++수령확인저장(int, int)
++전원수령확인여부조회(int): boolean
+```
+
+```text
+2차공지DB
++2차공지조회(int): 2차공지
+```
+
+```text
+2차기록DB
++과거참가기록조회(int): 참가기록
++결과저장(int, List<참가결과>)
+```
+
+### 4.11 사장님UI·엔티티
+
+```text
+사장님UI
++알림대상없음알림(int)
++참가인원알림(int, int)
++등록실패알림(String)
++기존공지반환(String)
++모임공지반환(int)
++테이블구성알림(int, int, List<int>)
++출석실패알림(int, String)
++모임취소알림(int)
++의자추가알림(int, int)
++교환취소알림(int, int)
++교환확정알림(int, int)
++품앗이완료알림(int, int)
++화장실확인요청알림(int)
+```
+
+```text
+참가기록
+-참가횟수: int
+-알림받은횟수: int
+```
+
+```text
+참가응답
+-학생ID: int
+-선택: String
+```
+
+```text
+참가결과
+-학생ID: int
+-모임ID: int
+-결과: String
+```
+
+```text
+Point
+-위도: double
+-경도: double
+```
+
+```text
+2차공지
+-대상모임ID: int
+-2차장소: String
+-시작시각: datetime
+```
+
+```text
+학생비상연락정보
+-이름: String
+-학번: String
+-비상연락처: String
+```
+
+```text
+화장실구성
+-소변기수: int
+-대변기수: int
+```
+
+```text
+화장실대기열현황
+-대기조수: int
+-대기학생목록: List<화장실대기학생>
+```
+
+```text
+화장실대기학생
+-학생ID: int
+-등록시각: datetime
+-방광게이지: double
+```
+
+### 4.12 학생UI
+
+```text
+학생UI
++참가선택요청(List<int>, String, datetime)
++결과알림(int, String)
++알림대상없음알림(int)
++모임신청알림(int, int)
++모임공지화면표시(int)
++모임공지목록갱신(int)
++신청불가알림(String)
++신청마감알림(int)
++중복신청불가알림(int)
++계정정지안내표시및강제종료(int)
++참가비계산불가알림(int)
++참가비안내표시(int, int)
++결제실패알림(String)
++신청완료알림(int)
++출석실패알림(int, String)
++출석완료및주문가능알림(int, int)
++출석완료알림(int, int)
++바뀐테이블번호알림(int, int)
++질문카드표시(int, String, List<int>)
++정답공개알림(int, List<int>, boolean)
++이야기공유요청(int, String)
++게임종료알림(int)
++동의현황표시(int, int, int)
++프로필항목공개표시(int, int, List<String>)
++환급알림(int, int)
++평가화면표시(int, List<int>, List<String>)
++평가제출완료알림(int)
++관심학생등록화면표시(List<int>, List<String>)
++등록생략알림(int)
++중복등록알림(int)
++등록완료알림(int)
++신고대상목록표시(List<int>, List<String>)
++신고생략알림(int)
++신고작성창표시(int)
++입력오류알림(int)
++신고접수완료알림(int)
++이용정지알림(int, String)
++위치확인불가알림(int)
++귀가모니터링시작알림(int, datetime)
++안전귀가알림(int)
++안전확인요청알림(int)
++릴레이잇기버튼활성화(int)
++릴레이잇기버튼비활성화(int)
++기부참여요청(int, int)
++참여불가알림(int)
++릴레이결과알림(int, int)
++검증실패알림(int, String)
++교환요청전달(int, int, String, int)
++교환취소알림(int, int)
++교환확정알림(int, int)
++품앗이완료알림(int, int)
++대기순번표시(int, int)
++등록불가알림(int, String)
++대기조순번알림(int, int)
++화장실입장알림(int)
++숙취예보및쿠폰알림(int, int, String)
++숙취예보알림(int, int)
+```

@@ -112,5 +112,43 @@ for n in use: L.append(f'    class {cl[n]["id"]}["{n}"]')
 for a,b in rest: L.append(f'    {cl[a]["id"]} -- {cl[b]["id"]}')
 out.append('### 3.13 공통 객체·DB·엔티티 사이의 관계선 (참고용)\n'); out.append(code(L))
 assert seen|set(rest)==edges
+# StarUML 옮겨 적기 (CONVENTIONS 8.1, 8.2)
+ENUMS=[]
+_g=(ROOT/'GLOSSARY.md').read_text(encoding='utf-8').replace('\r','')
+_m=re.search(r'^## 7\. enum.*?\n(.*?)(?=^## )',_g,re.M|re.S)
+for _l in _m[1].split('\n'):
+    _c=[x.strip() for x in _l.split('|')]
+    if len(_c)>4 and _c[1] and _c[1] not in ('enum',) and not _c[1].startswith('-'): ENUMS.append(_c[1])
+_ep=re.compile(r'(?<![가-힣A-Za-z0-9])('+'|'.join(map(re.escape,ENUMS))+r')(?![가-힣A-Za-z0-9])')
+def su_type(x): return _ep.sub('String',x.strip())
+def su_params(s):
+    parts,depth,cur=[],0,''
+    for ch in s:
+        if ch=='<': depth+=1
+        if ch=='>': depth-=1
+        if ch==',' and depth==0: parts.append(cur); cur=''
+        else: cur+=ch
+    if cur.strip(): parts.append(cur)
+    return ', '.join(su_type(x.split(':',1)[1] if ':' in x else x) for x in parts)
+def su_op(sig):
+    m=re.match(r'^([^()]+)\((.*)\)\s*(?::\s*(.+))?$',sig.strip())
+    if not m: return sig
+    r=f'{m[1].strip()}({su_params(m[2])})'
+    return r+(f': {su_type(m[3])}' if m[3] else '')
+out.append('## 4. StarUML 옮겨 적기\n')
+out.append(f'StarUML에 옮길 때 그대로 적는 표기다 (CONVENTIONS 8.1, 8.2). 매개변수 이름을 빼고 자료형만 적으며, enum 타입({", ".join(ENUMS)})은 `String`으로 적는다. 속성 이름, 엔티티 이름, `List<타입>`은 그대로 둔다. 순서는 3장 영역별 그림과 같다.\n')
+_done=set(); _cnt=[0,0]
+_groups=[('4.1 담당 객체: 모임 전 ①',pick(['1','2-1','2-2'])),('4.2 담당 객체: 모임 전 ②',pick(['3','4-2'])),('4.3 담당 객체: 출석·교류',pick(['5','6','7','8'])),('4.4 담당 객체: 기부·품앗이·화장실',pick(['16','17','18-1','18-2'])),('4.5 담당 객체: 정산·평가·신고',pick(['9','10','11','12','13'])),('4.6 담당 객체: 귀가·예보·2차',pick(['15','19','20'])),('4.7 공통 객체·외부',by['공통 객체']+by['외부'])]+[(f'4.{8+j} DB: {t_}',ns) for j,(t_,ns) in enumerate(DB)]+[('4.11 사장님UI·엔티티',['사장님UI']+by['엔티티']),('4.12 학생UI',['학생UI'])]
+for _title,_names in _groups:
+    out.append(f'### {_title}\n')
+    for n in _names:
+        _done.add(n); c=cl[n]; L=[n]
+        for v,a,t_ in c['attrs']:
+            s=su_type(t_); _cnt[1]+=s!=t_.strip(); L.append(f'{v}{a}: {s}')
+        for v,s in c['ops']:
+            r=su_op(s); _cnt[0]+=r!=s.strip(); L.append(f'{v}{r}')
+        out.append('```text\n'+'\n'.join(L)+'\n```\n')
+assert _done==set(cl),set(cl)-_done
+print('staruml lines changed',_cnt[0],'attrs changed',_cnt[1])
 (ROOT/'class-diagram'/'class-diagram.md').write_text('\n'.join(out),encoding='utf-8',newline='\n')
 print('classes',len(cl),dict(ptn),'edges',len(edges),'rest',len(rest),'skipped',dict(skipped))
