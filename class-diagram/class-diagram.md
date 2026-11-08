@@ -12,11 +12,11 @@
 | 공통 객체 | 2 |
 | DB | 18 |
 | UI | 2 |
-| 외부 | 1 |
+| 외부 | 2 |
 | 엔티티 | 9 |
-| **합계** | **53** |
+| **합계** | **54** |
 
-`classes/` 파일 53개와 1:1로 대응한다. 관계선은 두 클래스 사이에 하나씩, 모두 132개다.
+`classes/` 파일 54개와 1:1로 대응한다. 관계선은 두 클래스 사이에 하나씩, 모두 133개다.
 
 | 번호 | 클래스 | 종류 | 파일 |
 |---|---|---|---|
@@ -64,19 +64,20 @@
 | 42 | 사장님UI | UI | [OwnerUI.md](../classes/OwnerUI.md) |
 | 43 | 학생UI | UI | [StudentUI.md](../classes/StudentUI.md) |
 | 44 | 단말기위치정보 | 외부 | [DeviceLocation.md](../classes/DeviceLocation.md) |
-| 45 | 참가기록 | 엔티티 | [ParticipationRecord.md](../classes/ParticipationRecord.md) |
-| 46 | 참가응답 | 엔티티 | [ParticipationResponse.md](../classes/ParticipationResponse.md) |
-| 47 | 참가결과 | 엔티티 | [ParticipationResult.md](../classes/ParticipationResult.md) |
-| 48 | Point | 엔티티 | [Point.md](../classes/Point.md) |
-| 49 | 2차공지 | 엔티티 | [SecondNotice.md](../classes/SecondNotice.md) |
-| 50 | 학생비상연락정보 | 엔티티 | [StudentEmergencyContact.md](../classes/StudentEmergencyContact.md) |
-| 51 | 화장실구성 | 엔티티 | [ToiletConfig.md](../classes/ToiletConfig.md) |
-| 52 | 화장실대기열현황 | 엔티티 | [ToiletQueueStatus.md](../classes/ToiletQueueStatus.md) |
-| 53 | 화장실대기학생 | 엔티티 | [ToiletWaitStudent.md](../classes/ToiletWaitStudent.md) |
+| 45 | 결제서비스 | 외부 | [PaymentService.md](../classes/PaymentService.md) |
+| 46 | 참가기록 | 엔티티 | [ParticipationRecord.md](../classes/ParticipationRecord.md) |
+| 47 | 참가응답 | 엔티티 | [ParticipationResponse.md](../classes/ParticipationResponse.md) |
+| 48 | 참가결과 | 엔티티 | [ParticipationResult.md](../classes/ParticipationResult.md) |
+| 49 | Point | 엔티티 | [Point.md](../classes/Point.md) |
+| 50 | 2차공지 | 엔티티 | [SecondNotice.md](../classes/SecondNotice.md) |
+| 51 | 학생비상연락정보 | 엔티티 | [StudentEmergencyContact.md](../classes/StudentEmergencyContact.md) |
+| 52 | 화장실구성 | 엔티티 | [ToiletConfig.md](../classes/ToiletConfig.md) |
+| 53 | 화장실대기열현황 | 엔티티 | [ToiletQueueStatus.md](../classes/ToiletQueueStatus.md) |
+| 54 | 화장실대기학생 | 엔티티 | [ToiletWaitStudent.md](../classes/ToiletWaitStudent.md) |
 
 ## 2. 전체 그림
 
-53개 클래스의 이름만 종류별로 묶었다. 관계선은 3장에서 본다.
+54개 클래스의 이름만 종류별로 묶었다. 관계선은 3장에서 본다.
 
 ```mermaid
 flowchart TB
@@ -163,8 +164,9 @@ flowchart TB
         StudentUI["학생UI"]
     end
     G3 ~~~ G4
-    subgraph G5["외부 1개"]
+    subgraph G5["외부 2개"]
         DeviceLocation["단말기위치정보"]
+        PaymentService["결제서비스"]
     end
     G4 ~~~ G5
     subgraph G6["엔티티 9개"]
@@ -191,7 +193,7 @@ PPT 2장부터 쓰는 그림이다. StarUML에서는 영역마다 다이어그�
 
 | PPT | 절 | 내용 |
 |---|---|---|
-| 1장 | 2장 전체 그림, 통합 다이어그램 | 53개, 이름만, 관계선 포함 |
+| 1장 | 2장 전체 그림, 통합 다이어그램 | 54개, 이름만, 관계선 포함 |
 | 2장 | 3.1 | 모임 전 ① |
 | 3장 | 3.2 | 모임 전 ② |
 | 4장 | 3.3 | 모임 중: 출석·교류 |
@@ -240,10 +242,10 @@ classDiagram
         -결제금액: int
         +결제요청(학생ID: int, 모임ID: int, 결제금액: int)
         -참가비일치검증(결제금액: int, 학생ID: int) boolean
-        -결제승인요청(결제금액: int) boolean
     }
     class StoreDB["가게DB"]
     class PaymentDB["결제DB"]
+    class PaymentService["결제서비스"]
     class MeetingDB["모임DB"]
     class OwnerUI["사장님UI"]
     class ApplicationDB["신청DB"]
@@ -252,6 +254,7 @@ classDiagram
     class StudentUI["학생UI"]
     MeetingNoticeRegistration -- StoreDB
     PaymentAndApplicationConfirm -- PaymentDB
+    PaymentAndApplicationConfirm -- PaymentService
     PaymentAndApplicationConfirm -- MeetingDB
     PaymentAndApplicationConfirm -- ApplicationDB
     PaymentAndApplicationConfirm -- ProfileDB
@@ -648,6 +651,9 @@ classDiagram
     }
     class DeviceLocation["단말기위치정보"] {
         +현재위치조회(학생ID: int) Point
+    }
+    class PaymentService["결제서비스"] {
+        +결제승인요청(결제금액: int) boolean
     }
 ```
 
