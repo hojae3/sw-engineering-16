@@ -564,7 +564,7 @@ classDiagram
     class SafeReturnHome["당일안심귀가"] {
         -모임종료시각: datetime
         -귀가마감시각: datetime
-        +모임종료시각도달(모임ID: int)
+        +모임종료저장됨(모임ID: int)
         +안전응답선택(학생ID: int)
         -귀가마감시각계산(모임종료시각: datetime, 추정이동시간: int) datetime
     }
@@ -695,7 +695,7 @@ classDiagram
         +중복신청조회(학생ID: int, 모임ID: int) boolean
         +신청저장(학생ID: int, 모임ID: int, 상태: 신청상태)
         +선발학생목록조회(모임ID: int) List~int~
-        +미시작결제완료신청목록조회(학생ID: int) List~int~
+        +미시작신청목록조회(학생ID: int) List~int~
         +신청상태변경(학생ID: int, 모임ID: int, 상태: 신청상태)
     }
     class PaymentDB["결제DB"] {
@@ -908,6 +908,7 @@ classDiagram
         +입력오류알림(학생ID: int)
         +신고접수완료알림(학생ID: int)
         +이용정지알림(학생ID: int, 정지사유: String)
+        +위치확인불가알림(학생ID: int)
         +귀가모니터링시작알림(학생ID: int, 귀가마감시각: datetime)
         +안전귀가알림(학생ID: int)
         +안전확인요청알림(학생ID: int)
