@@ -308,12 +308,14 @@ Function, Description, Input, Source, Output, Destination, Action, Requirements,
 | `Note` | Note (점선으로 해당 Lifeline에 연결) |
 | 메시지 번호 | 메시지 이름에 번호까지 그대로 입력 (showSequenceNumber는 끈다) |
 
-- StarUML에서 매개변수 칸에는 **자료형만** 적어도 된다. 단, GitHub 원본에는 `이름: 자료형`을 유지한다.
+- StarUML에서는 매개변수 이름을 빼고 **자료형만** 적는다. enum 타입(GLOSSARY 7장)은 매개변수와 반환 타입 모두 `String`으로 적는다. 엔티티 이름(`Point`, `참가결과` 등)과 `List<타입>`은 그대로 적는다. GitHub 원본에는 `이름: 자료형`을 그대로 둔다 (FEEDBACK #16).
+  - 예: `모임상태변경(모임ID: int, 상태: 모임상태)` → `모임상태변경(int, String)`
 - 다이어그램 이름: `seq-20 2차참가자동결정`
 
 ### 8.2 클래스
 
 - 클래스 파일의 속성·연산 표를 그대로 옮긴다. 가시성(`+`, `-`)을 지킨다.
+- 속성과 연산의 자료형은 8.1과 같은 규칙으로 적는다. 매개변수 이름은 빼고, enum 타입은 `String`으로 적는다.
 - 관계 표의 연결 대상마다 Association을 하나 긋는다. 화살표(navigable)와 다중성은 표시하지 않는다.
 
 ### 8.3 유스케이스
