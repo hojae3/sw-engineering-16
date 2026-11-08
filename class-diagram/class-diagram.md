@@ -16,7 +16,7 @@
 | 엔티티 | 9 |
 | **합계** | **53** |
 
-`classes/` 파일 53개와 1:1로 대응한다. 관계선은 두 클래스 사이에 하나씩, 모두 130개다.
+`classes/` 파일 53개와 1:1로 대응한다. 관계선은 두 클래스 사이에 하나씩, 모두 131개다.
 
 | 번호 | 클래스 | 종류 | 파일 |
 |---|---|---|---|
@@ -532,6 +532,7 @@ classDiagram
     MeetingEvaluation -- EvaluationDB
     MeetingEvaluation -- ProfileDB
     MeetingEvaluation -- StudentUI
+    MannerSuspension -- MeetingDB
     AutoSettlement -- MeetingDB
     AutoSettlement -- ArrangementDB
     MannerReport -- ReportDB
@@ -688,6 +689,7 @@ classDiagram
         +기본참가비조회(모임ID: int) int
         +모임상태변경(모임ID: int, 상태: 모임상태)
         +가게ID조회(모임ID: int) int
+        +시작전모임목록조회() List~int~
         +모임종료시각조회(모임ID: int) datetime
         +전일종료모임목록조회() List~int~
     }
@@ -695,7 +697,7 @@ classDiagram
         +중복신청조회(학생ID: int, 모임ID: int) boolean
         +신청저장(학생ID: int, 모임ID: int, 상태: 신청상태)
         +선발학생목록조회(모임ID: int) List~int~
-        +미시작신청목록조회(학생ID: int) List~int~
+        +미시작신청목록조회(학생ID: int, 모임ID목록: List~int~) List~int~
         +신청상태변경(학생ID: int, 모임ID: int, 상태: 신청상태)
     }
     class PaymentDB["결제DB"] {
