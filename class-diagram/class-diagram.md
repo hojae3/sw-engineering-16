@@ -16,7 +16,7 @@
 | 엔티티 | 9 |
 | **합계** | **53** |
 
-`classes/` 파일 53개와 1:1로 대응한다. 관계선은 두 클래스 사이에 하나씩, 모두 131개다.
+`classes/` 파일 53개와 1:1로 대응한다. 관계선은 두 클래스 사이에 하나씩, 모두 132개다.
 
 | 번호 | 클래스 | 종류 | 파일 |
 |---|---|---|---|
@@ -357,8 +357,6 @@ classDiagram
         -테이블번호: int
         -현재단계: int
         +정보공개동의(학생ID: int, 모임ID: int, 테이블번호: int, 현재단계: int)
-        -동의기록및집계(학생ID: int, 현재단계: int) int
-        -동의상태초기화(테이블번호: int)
     }
     class MeetingDB["모임DB"]
     class ArrangementDB["배치DB"]
@@ -381,6 +379,7 @@ classDiagram
     QRAttendance -- AttendanceDB
     QRAttendance -- TableAttendanceStatus
     QRAttendance -- StudentUI
+    BlindProfileDisclosure -- ArrangementDB
     BlindProfileDisclosure -- TableAttendanceStatus
     BlindProfileDisclosure -- ProfileDB
     BlindProfileDisclosure -- StudentUI
@@ -728,6 +727,10 @@ classDiagram
         +학생테이블번호조회(학생ID: int, 모임ID: int) int
         +테이블배치및의자조회(모임ID: int) List~int~
         +추가의자갱신(모임ID: int, 테이블번호: int)
+        +동의학생저장(모임ID: int, 테이블번호: int, 학생ID: int, 현재단계: int)
+        +동의학생수조회(모임ID: int, 테이블번호: int, 현재단계: int) int
+        +동의상태변경(모임ID: int, 테이블번호: int, 현재단계: int)
+        +공개단계갱신(모임ID: int, 테이블번호: int, 공개단계: int)
         +테이블번호갱신(학생ID: int, 모임ID: int, 새테이블번호: int)
     }
     class AttendanceDB["출석DB"] {
@@ -895,8 +898,8 @@ classDiagram
         +정답공개알림(학생ID: int, 정답학생목록: List~int~, 맞힘여부: boolean)
         +이야기공유요청(학생ID: int, 관심사태그: String)
         +게임종료알림(학생ID: int)
-        +동의현황표시(동의수: int, 출석인원: int)
-        +프로필항목공개표시(단계: int, 항목목록: List~String~)
+        +동의현황표시(학생ID: int, 동의수: int, 출석인원: int)
+        +프로필항목공개표시(학생ID: int, 단계: int, 항목목록: List~String~)
         +환급알림(학생ID: int, 환급액: int)
         +평가화면표시(학생ID: int, 대상학생목록: List~int~, 프로필사진목록: List~String~)
         +평가제출완료알림(학생ID: int)

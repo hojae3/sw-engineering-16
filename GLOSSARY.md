@@ -40,7 +40,7 @@
 | 신청DB | 학생별 모임 신청, 신청 시각, 신청 상태 | PPT | ApplicationDB.md |
 | 결제DB | 참가비 결제, 환급, 정산 결과 | PPT | PaymentDB.md |
 | 관심등록DB | 관심 대상으로 등록한 학생 관계, 등록 시각 | PPT | InterestRegistrationDB.md |
-| 배치DB | 테이블 배정, 합석 이력, 최종배치 | PPT | ArrangementDB.md |
+| 배치DB | 테이블 배정, 합석 이력, 최종배치, 테이블별 공개 단계와 동의 학생 | PPT | ArrangementDB.md |
 | 출석DB | QR 출석·사장님 확인 출석 기록, 출석 시각 | PPT | AttendanceDB.md |
 | 주문DB | 음식·주류 주문 내역, 금액, 추가 주문, 마감 상태 | PPT | OrderDB.md |
 | 질문카드DB | 관심사 기반 대화 주제 카드 | PPT | QuestionCardDB.md |
