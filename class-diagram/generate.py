@@ -137,6 +137,7 @@ def su_op(sig):
     return r+(f': {su_type(m[3])}' if m[3] else '')
 out.append('## 4. StarUML 옮겨 적기\n')
 out.append(f'StarUML에 옮길 때 그대로 적는 표기다 (CONVENTIONS 8.1, 8.2). 매개변수 이름을 빼고 자료형만 적으며, enum 타입({", ".join(ENUMS)})은 `String`으로 적는다. 속성 이름, 엔티티 이름, `List<타입>`은 그대로 둔다. 순서는 3장 영역별 그림과 같다.\n')
+out.append('같은 내용을 StarUML에 한 번에 만드는 스크립트가 `class-diagram/staruml-script.js`에 있다. StarUML에서 **File → New**로 빈 프로젝트를 연 뒤, 파일 내용 전체를 복사해 **Script Console**(아래 창) 입력줄에 붙여 넣고 Enter를 누른다. 클래스 '+str(len(cl))+'개, 관계선, 다이어그램 12개(1 통합, 2~12 PPT 슬라이드 순서)가 만들어진다. 배치는 격자로만 놓이므로 손으로 정리한다.\n')
 _done=set(); _cnt=[0,0]
 _groups=[('4.1 담당 객체: 모임 전 ①',pick(['1','2-1','2-2'])),('4.2 담당 객체: 모임 전 ②',pick(['3','4-2'])),('4.3 담당 객체: 출석·교류',pick(['5','6','7','8'])),('4.4 담당 객체: 기부·품앗이·화장실',pick(['16','17','18-1','18-2'])),('4.5 담당 객체: 정산·평가·신고',pick(['9','10','11','12','13'])),('4.6 담당 객체: 귀가·예보·2차',pick(['15','19','20'])),('4.7 공통 객체·외부',by['공통 객체']+by['외부'])]+[(f'4.{8+j} DB: {t_}',ns) for j,(t_,ns) in enumerate(DB)]+[('4.11 사장님UI·엔티티',['사장님UI']+by['엔티티']),('4.12 학생UI',['학생UI'])]
 for _title,_names in _groups:
@@ -150,5 +151,56 @@ for _title,_names in _groups:
         out.append('```text\n'+'\n'.join(L)+'\n```\n')
 assert _done==set(cl),set(cl)-_done
 print('staruml lines changed',_cnt[0],'attrs changed',_cnt[1])
+# StarUML 스크립트 (Script Console에 붙여 넣으면 54개 클래스와 12개 다이어그램을 만든다)
+import json
+names=list(cl)
+idx={n:i for i,n in enumerate(names)}
+def split_params(s): return su_params(s).split(', ') if s.strip() else []
+C=[]
+for n in names:
+    c=cl[n]; A=[]; O=[]
+    for v,a,t in c['attrs']: A.append([v,a,su_type(t)])
+    for v,s in c['ops']:
+        m=re.match(r'^([^()]+)\((.*)\)\s*(?::\s*(.+))?$',s.strip())
+        assert m,s
+        O.append([v,m[1].strip(),split_params(m[2]),su_type(m[3]) if m[3] else ''])
+    C.append([n,A,O])
+E=[[idx[a],idx[b]] for a,b in sorted(edges)]
+def area(title,main,lines=True):
+    S=set(main)
+    others=sorted({x for e in edges if e[0] in S or e[1] in S for x in e}-S) if lines else []
+    return [title,[idx[n] for n in main],[idx[n] for n in others],1 if lines else 0]
+order=['담당 객체','공통 객체','DB','UI','외부','엔티티']
+whole=[idx[n] for k in order for n in by[k]]
+AR=[area('2 모임 전 ①',pick(['1','2-1','2-2'])),area('3 모임 전 ②',pick(['3','4-2'])),area('4 출석·교류',pick(['5','6','7','8'])),area('5 기부·품앗이·화장실',pick(['16','17','18-1','18-2'])),area('6 정산·평가·신고',pick(['9','10','11','12','13'])),area('7 귀가·예보·2차',pick(['15','19','20'])),
+    area('8 공통 객체·외부·DB 회원·모임',by['공통 객체']+by['외부']+DB[0][1],False),area('9 DB 모임 진행',DB[1][1],False),area('10 DB 평가·교류',DB[2][1],False),area('11 사장님UI·엔티티',['사장님UI']+by['엔티티'],False),area('12 학생UI',['학생UI'],False)]
+data=json.dumps({'C':C,'E':E,'W':whole,'A':AR},ensure_ascii=False,separators=(',',':'))
+js=r'''(function(D){
+var F=app.factory,R=[],M=app.project.getProject().ownedElements.filter(function(e){return e instanceof type.UMLModel})[0],bad=0;
+function vis(v){return v=="-"?"private":"public"}
+function tw(s){var w=0;for(var i=0;i<s.length;i++)w+=s.charCodeAt(i)>255?14:8;return w}
+var size=D.C.map(function(c){var L=[c[0]];c[1].forEach(function(a){L.push(a[0]+a[1]+": "+a[2])});c[2].forEach(function(o){L.push(o[0]+o[1]+"("+o[2].join(", ")+")"+(o[3]?": "+o[3]:""))});return{w:Math.max.apply(null,L.map(tw))+30,h:50+(c[1].length+c[2].length)*15+20,nw:tw(c[0])+40}});
+var K=D.C.map(function(c){
+ var k=F.createModel({id:"UMLClass",parent:M,modelInitializer:function(e){e.name=c[0]}});
+ c[1].forEach(function(a){F.createModel({id:"UMLAttribute",parent:k,field:"attributes",modelInitializer:function(e){e.name=a[1];e.type=a[2];e.visibility=vis(a[0])}})});
+ c[2].forEach(function(o){var op=F.createModel({id:"UMLOperation",parent:k,field:"operations",modelInitializer:function(e){e.name=o[1];e.visibility=vis(o[0])}});
+  o[2].forEach(function(t){F.createModel({id:"UMLParameter",parent:op,field:"parameters",modelInitializer:function(e){e.name=t}})});
+  if(o[3])F.createModel({id:"UMLParameter",parent:op,field:"parameters",modelInitializer:function(e){e.direction="return";e.type=o[3]}})});
+ return k});
+function dia(n){return F.createDiagram({id:"UMLClassDiagram",parent:M,diagramInitializer:function(d){d.name=n}})}
+function put(d,i,x,y,full){var v=F.createViewOf({model:K[i],diagram:d,x:x,y:y});if(!full){app.engine.setProperty(v,"suppressAttributes",true);app.engine.setProperty(v,"suppressOperations",true)}return v}
+var W=dia("1 통합 다이어그램 ("+D.C.length+"개)"),V={};
+D.W.forEach(function(i,j){V[i]=put(W,i,40+(j%8)*230,40+Math.floor(j/8)*110,false)});
+var AS=D.E.map(function(e){return F.createModelAndView({id:"UMLAssociation",parent:M,diagram:W,tailView:V[e[0]],headView:V[e[1]],tailModel:K[e[0]],headModel:K[e[1]]}).model});
+D.A.forEach(function(a){var d=dia(a[0]),x=40,y=40,cw=0,on={};
+ a[1].forEach(function(i){var s=size[i];if(y>40&&y+s.h>1400){x+=cw+60;y=40;cw=0}put(d,i,x,y,true);on[i]=1;y+=s.h+40;cw=Math.max(cw,s.w)});
+ var ox=x+cw+120;a[2].forEach(function(i,j){put(d,i,ox+(j%3)*230,40+Math.floor(j/3)*110,false);on[i]=1});
+ var mine={};a[1].forEach(function(i){mine[i]=1});
+ if(a[3])D.E.forEach(function(e,j){if((mine[e[0]]||mine[e[1]])&&on[e[0]]&&on[e[1]]&&!d.getViewOf(AS[j])){try{F.createViewOf({model:AS[j],diagram:d})}catch(err){bad++}}});
+ var ex=d.ownedViews.filter(function(v){if(!(v.model instanceof type.UMLAssociation))return false;var p=K.indexOf(v.model.end1.reference),q=K.indexOf(v.model.end2.reference);return !(a[3]&&(mine[p]||mine[q]))});
+ if(ex.length){try{app.engine.deleteElements([],ex)}catch(err){bad+=ex.length}}});
+console.log("클래스 "+K.length+"개, 관계 "+AS.length+"개, 다이어그램 "+(1+D.A.length)+"개 생성"+(bad?", 영역 그림에 못 그린 관계선 "+bad+"개":""));
+})('''+data+');'
+(ROOT/'class-diagram'/'staruml-script.js').write_text(js.replace('\n','')+'\n',encoding='utf-8',newline='\n')
 (ROOT/'class-diagram'/'class-diagram.md').write_text('\n'.join(out),encoding='utf-8',newline='\n')
 print('classes',len(cl),dict(ptn),'edges',len(edges),'rest',len(rest),'skipped',dict(skipped))

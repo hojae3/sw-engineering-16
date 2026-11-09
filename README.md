@@ -90,6 +90,7 @@ cd sw-engineering-16
 - 로컬에서는 VS Code + "Markdown Preview Mermaid Support" 확장, 또는 [mermaid.live](https://mermaid.live)에 코드를 붙여 넣어 확인한다.
 - 그림이 안 나오면 문법 오류다. push 전에 꼭 확인한다.
 - 통합 클래스 다이어그램은 직접 고치지 않는다. `classes/`를 고친 뒤 `python class-diagram/generate.py`(macOS는 `python3`)로 다시 만든다.
+- StarUML로 옮길 때는 같은 명령으로 함께 만들어지는 `class-diagram/staruml-script.js`를 쓴다. StarUML에서 File → New로 빈 프로젝트를 열고, 파일 내용 전체를 복사해 Script Console 입력줄에 붙여 넣은 뒤 Enter를 누르면 클래스·관계선·다이어그램 12개가 만들어진다. 배치는 손으로 정리한다.
 
 ### 4. Claude Code로 작업하기
 
