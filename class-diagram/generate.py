@@ -49,7 +49,9 @@ order=['담당 객체','공통 객체','DB','UI','외부','엔티티']
 def fnkey(n):
     return [int(x) for x in cl[n]['fn'].split('-')]
 by['담당 객체'].sort(key=fnkey)
-PRE=['1','2-1','2-2','3','4-2'];MID=['5','6','7','8','16','17','18-1','18-2'];POST=['9','10','11','12','13','15','19','20']
+AREAS=[('① 모임 생성·신청',['1','2-1','2-2','3','4-2']),('② 모임 현장 운영',['5','6','7','8','18-1','18-2']),('③ 모임 종료·사후 관리',['9','10','11','12','13','15','19']),('④ 부가·연계 서비스',['16','17','20'])]
+assert sorted(sum((a[1] for a in AREAS),[]))==sorted(cl[n]['fn'] for n in by['담당 객체']),'AREAS가 담당 객체와 맞지 않음'
+fx=lambda L:', '.join(L)
 pick=lambda L:[n for n in by['담당 객체'] if cl[n]['fn'] in L]
 DB=[('회원·모임',['프로필DB','정지DB','가게DB','모임DB','신청DB','결제DB']),('모임 진행',['관심등록DB','배치DB','출석DB','주문DB','질문카드DB','화장실대기열DB']),('평가·교류',['평가DB','신고DB','기부DB','품앗이DB','2차공지DB','2차기록DB'])]
 assert sum(len(x[1]) for x in DB)==len(by['DB']) and set(sum((x[1] for x in DB),[]))==set(by['DB'])
@@ -96,21 +98,21 @@ def areafig(names):
     return code(L),shown
 out.append('## 3. 영역별 그림\n')
 out.append('PPT 2장부터 쓰는 그림이다. StarUML에서는 영역마다 다이어그램을 따로 만들고, Model Explorer의 기존 클래스를 끌어다 놓는다. 표기는 Mermaid 규칙에 따라 `List<int>`를 `List~int~`로 적지만 그림에는 `List<int>`로 나온다.\n')
-out.append('| PPT | 절 | 내용 |\n|---|---|---|\n| 1장 | 2장 전체 그림, 통합 다이어그램 | '+str(len(cl))+'개, 이름만, 관계선 포함 |\n| 2장 | 3.1 | 모임 전 ① |\n| 3장 | 3.2 | 모임 전 ② |\n| 4장 | 3.3 | 모임 중: 출석·교류 |\n| 5장 | 3.4 | 모임 중: 기부·품앗이·화장실 |\n| 6장 | 3.5 | 모임 후: 정산·평가·신고 |\n| 7장 | 3.6 | 모임 후: 귀가·예보·2차 |\n| 8장 | 3.7, 3.8 | 공통 객체·외부, DB 회원·모임 |\n| 9장 | 3.9 | DB 모임 진행 |\n| 10장 | 3.10 | DB 평가·교류 |\n| 11장 | 3.11 | 사장님UI·엔티티 |\n| 12장 | 3.12 | 학생UI |\n| 슬라이드 아님 | 3.13 | 참고용: 공통 객체·DB·엔티티 사이의 관계선 |\n')
+out.append('| PPT | 절 | 내용 |\n|---|---|---|\n| 1장 | 2장 전체 그림, 통합 다이어그램 | '+str(len(cl))+'개, 이름만, 관계선 포함 |\n'+''.join(f'| {2+j}장 | 3.{1+j} | {a[0]} |\n' for j,a in enumerate(AREAS))+'| 6장 | 3.5, 3.6 | 공통 객체·외부, DB 회원·모임 |\n| 7장 | 3.7 | DB 모임 진행 |\n| 8장 | 3.8 | DB 평가·교류 |\n| 9장 | 3.9 | 사장님UI·엔티티 |\n| 10장 | 3.10 | 학생UI |\n| 슬라이드 아님 | 3.11 | 참고용: 공통 객체·DB·엔티티 사이의 관계선 |\n')
 seen=set()
-for title,names in [('3.1 모임 전 ① (기능 1, 2-1, 2-2)',pick(['1','2-1','2-2'])),('3.2 모임 전 ② (기능 3, 4-2)',pick(['3','4-2'])),('3.3 모임 중: 출석·교류 (기능 5, 6, 7, 8)',pick(['5','6','7','8'])),('3.4 모임 중: 기부·품앗이·화장실 (기능 16, 17, 18-1, 18-2)',pick(['16','17','18-1','18-2'])),('3.5 모임 후: 정산·평가·신고 (기능 9, 10, 11, 12, 13)',pick(['9','10','11','12','13'])),('3.6 모임 후: 귀가·예보·2차 (기능 15, 19, 20)',pick(['15','19','20']))]:
+for title,names in [(f'3.{1+j} {a[0]} (기능 {fx(a[1])})',pick(a[1])) for j,a in enumerate(AREAS)]:
     c_,s=areafig(names); seen|=set(s); out.append(f'### {title}\n'); out.append(c_)
-out.append('### 3.7 공통 객체·외부\n'); out.append(detail(by['공통 객체']+by['외부']))
+out.append('### 3.5 공통 객체·외부\n'); out.append(detail(by['공통 객체']+by['외부']))
 for j,(t_,ns) in enumerate(DB):
-    out.append(f'### 3.{8+j} DB: {t_}\n'); out.append(detail(ns))
-out.append('### 3.11 사장님UI·엔티티\n'); out.append(detail(['사장님UI']+by['엔티티']))
-out.append('### 3.12 학생UI\n'); out.append(detail(['학생UI']))
+    out.append(f'### 3.{6+j} DB: {t_}\n'); out.append(detail(ns))
+out.append('### 3.9 사장님UI·엔티티\n'); out.append(detail(['사장님UI']+by['엔티티']))
+out.append('### 3.10 학생UI\n'); out.append(detail(['학생UI']))
 rest=sorted(edges-seen)
 use=sorted({x for e in rest for x in e})
 L=HEAD+['classDiagram','    direction LR']
 for n in use: L.append(f'    class {cl[n]["id"]}["{n}"]')
 for a,b in rest: L.append(f'    {cl[a]["id"]} -- {cl[b]["id"]}')
-out.append('### 3.13 공통 객체·DB·엔티티 사이의 관계선 (참고용)\n'); out.append(code(L))
+out.append('### 3.11 공통 객체·DB·엔티티 사이의 관계선 (참고용)\n'); out.append(code(L))
 assert seen|set(rest)==edges
 # StarUML 옮겨 적기 (CONVENTIONS 8.1, 8.2)
 ENUMS=[]
@@ -137,9 +139,9 @@ def su_op(sig):
     return r+(f': {su_type(m[3])}' if m[3] else '')
 out.append('## 4. StarUML 옮겨 적기\n')
 out.append(f'StarUML에 옮길 때 그대로 적는 표기다 (CONVENTIONS 8.1, 8.2). 매개변수 이름을 빼고 자료형만 적으며, enum 타입({", ".join(ENUMS)})은 `String`으로 적는다. 속성 이름, 엔티티 이름, `List<타입>`은 그대로 둔다. 순서는 3장 영역별 그림과 같다.\n')
-out.append('같은 내용을 StarUML에 한 번에 만드는 스크립트가 `class-diagram/staruml-script.js`에 있다. StarUML에서 **File → New**로 빈 프로젝트를 연 뒤, 파일 내용 전체를 복사해 **Script Console**(아래 창) 입력줄에 붙여 넣고 Enter를 누른다. 클래스 '+str(len(cl))+'개, 관계선, 다이어그램 12개(1 통합, 2~12 PPT 슬라이드 순서)가 만들어진다. 배치는 격자로만 놓이므로 손으로 정리한다.\n')
+out.append('같은 내용을 StarUML에 한 번에 만드는 스크립트가 `class-diagram/staruml-script.js`에 있다. StarUML에서 **File → New**로 빈 프로젝트를 연 뒤, 파일 내용 전체를 복사해 **Script Console**(아래 창) 입력줄에 붙여 넣고 Enter를 누른다. 클래스 '+str(len(cl))+'개, 관계선, 다이어그램 10개(1 통합, 2~10 PPT 슬라이드 순서)가 만들어진다. 배치는 격자로만 놓이므로 손으로 정리한다.\n')
 _done=set(); _cnt=[0,0]
-_groups=[('4.1 담당 객체: 모임 전 ①',pick(['1','2-1','2-2'])),('4.2 담당 객체: 모임 전 ②',pick(['3','4-2'])),('4.3 담당 객체: 출석·교류',pick(['5','6','7','8'])),('4.4 담당 객체: 기부·품앗이·화장실',pick(['16','17','18-1','18-2'])),('4.5 담당 객체: 정산·평가·신고',pick(['9','10','11','12','13'])),('4.6 담당 객체: 귀가·예보·2차',pick(['15','19','20'])),('4.7 공통 객체·외부',by['공통 객체']+by['외부'])]+[(f'4.{8+j} DB: {t_}',ns) for j,(t_,ns) in enumerate(DB)]+[('4.11 사장님UI·엔티티',['사장님UI']+by['엔티티']),('4.12 학생UI',['학생UI'])]
+_groups=[(f'4.{1+j} 담당 객체: {a[0]}',pick(a[1])) for j,a in enumerate(AREAS)]+[('4.5 공통 객체·외부',by['공통 객체']+by['외부'])]+[(f'4.{6+j} DB: {t_}',ns) for j,(t_,ns) in enumerate(DB)]+[('4.9 사장님UI·엔티티',['사장님UI']+by['엔티티']),('4.10 학생UI',['학생UI'])]
 for _title,_names in _groups:
     out.append(f'### {_title}\n')
     for n in _names:
@@ -151,7 +153,7 @@ for _title,_names in _groups:
         out.append('```text\n'+'\n'.join(L)+'\n```\n')
 assert _done==set(cl),set(cl)-_done
 print('staruml lines changed',_cnt[0],'attrs changed',_cnt[1])
-# StarUML 스크립트 (Script Console에 붙여 넣으면 54개 클래스와 12개 다이어그램을 만든다)
+# StarUML 스크립트 (Script Console에 붙여 넣으면 클래스와 다이어그램 10개를 만든다)
 import json
 names=list(cl)
 idx={n:i for i,n in enumerate(names)}
@@ -172,8 +174,8 @@ def area(title,main,lines=True):
     return [title,[idx[n] for n in main],[idx[n] for n in others],1 if lines else 0]
 order=['담당 객체','공통 객체','DB','UI','외부','엔티티']
 whole=[idx[n] for k in order for n in by[k]]
-AR=[area('2 모임 전 ①',pick(['1','2-1','2-2'])),area('3 모임 전 ②',pick(['3','4-2'])),area('4 출석·교류',pick(['5','6','7','8'])),area('5 기부·품앗이·화장실',pick(['16','17','18-1','18-2'])),area('6 정산·평가·신고',pick(['9','10','11','12','13'])),area('7 귀가·예보·2차',pick(['15','19','20'])),
-    area('8 공통 객체·외부·DB 회원·모임',by['공통 객체']+by['외부']+DB[0][1],False),area('9 DB 모임 진행',DB[1][1],False),area('10 DB 평가·교류',DB[2][1],False),area('11 사장님UI·엔티티',['사장님UI']+by['엔티티'],False),area('12 학생UI',['학생UI'],False)]
+AR=[area(f'{2+j} {a[0]}',pick(a[1])) for j,a in enumerate(AREAS)]+[
+    area('6 공통 객체·외부·DB 회원·모임',by['공통 객체']+by['외부']+DB[0][1],False),area('7 DB 모임 진행',DB[1][1],False),area('8 DB 평가·교류',DB[2][1],False),area('9 사장님UI·엔티티',['사장님UI']+by['엔티티'],False),area('10 학생UI',['학생UI'],False)]
 data=json.dumps({'C':C,'E':E,'W':whole,'A':AR},ensure_ascii=False,separators=(',',':'))
 js=r'''(function(D){
 var F=app.factory,R=[],M=app.project.getProject().ownedElements.filter(function(e){return e instanceof type.UMLModel})[0],bad=0;

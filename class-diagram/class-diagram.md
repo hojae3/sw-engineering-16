@@ -194,20 +194,18 @@ PPT 2장부터 쓰는 그림이다. StarUML에서는 영역마다 다이어그�
 | PPT | 절 | 내용 |
 |---|---|---|
 | 1장 | 2장 전체 그림, 통합 다이어그램 | 54개, 이름만, 관계선 포함 |
-| 2장 | 3.1 | 모임 전 ① |
-| 3장 | 3.2 | 모임 전 ② |
-| 4장 | 3.3 | 모임 중: 출석·교류 |
-| 5장 | 3.4 | 모임 중: 기부·품앗이·화장실 |
-| 6장 | 3.5 | 모임 후: 정산·평가·신고 |
-| 7장 | 3.6 | 모임 후: 귀가·예보·2차 |
-| 8장 | 3.7, 3.8 | 공통 객체·외부, DB 회원·모임 |
-| 9장 | 3.9 | DB 모임 진행 |
-| 10장 | 3.10 | DB 평가·교류 |
-| 11장 | 3.11 | 사장님UI·엔티티 |
-| 12장 | 3.12 | 학생UI |
-| 슬라이드 아님 | 3.13 | 참고용: 공통 객체·DB·엔티티 사이의 관계선 |
+| 2장 | 3.1 | ① 모임 생성·신청 |
+| 3장 | 3.2 | ② 모임 현장 운영 |
+| 4장 | 3.3 | ③ 모임 종료·사후 관리 |
+| 5장 | 3.4 | ④ 부가·연계 서비스 |
+| 6장 | 3.5, 3.6 | 공통 객체·외부, DB 회원·모임 |
+| 7장 | 3.7 | DB 모임 진행 |
+| 8장 | 3.8 | DB 평가·교류 |
+| 9장 | 3.9 | 사장님UI·엔티티 |
+| 10장 | 3.10 | 학생UI |
+| 슬라이드 아님 | 3.11 | 참고용: 공통 객체·DB·엔티티 사이의 관계선 |
 
-### 3.1 모임 전 ① (기능 1, 2-1, 2-2)
+### 3.1 ① 모임 생성·신청 (기능 1, 2-1, 2-2, 3, 4-2)
 
 ```mermaid
 ---
@@ -243,42 +241,6 @@ classDiagram
         +결제요청(학생ID: int, 모임ID: int, 결제금액: int)
         -참가비일치검증(결제금액: int, 학생ID: int) boolean
     }
-    class StoreDB["가게DB"]
-    class PaymentDB["결제DB"]
-    class PaymentService["결제서비스"]
-    class MeetingDB["모임DB"]
-    class OwnerUI["사장님UI"]
-    class ApplicationDB["신청DB"]
-    class SuspensionDB["정지DB"]
-    class ProfileDB["프로필DB"]
-    class StudentUI["학생UI"]
-    MeetingNoticeRegistration -- StoreDB
-    PaymentAndApplicationConfirm -- PaymentDB
-    PaymentAndApplicationConfirm -- PaymentService
-    PaymentAndApplicationConfirm -- MeetingDB
-    PaymentAndApplicationConfirm -- ApplicationDB
-    PaymentAndApplicationConfirm -- ProfileDB
-    PaymentAndApplicationConfirm -- StudentUI
-    MeetingNoticeRegistration -- MeetingDB
-    ApplicationCheckAndFeeCalc -- MeetingDB
-    MeetingNoticeRegistration -- OwnerUI
-    MeetingNoticeRegistration -- StudentUI
-    ApplicationCheckAndFeeCalc -- ApplicationDB
-    ApplicationCheckAndFeeCalc -- SuspensionDB
-    ApplicationCheckAndFeeCalc -- ProfileDB
-    ApplicationCheckAndFeeCalc -- StudentUI
-```
-
-### 3.2 모임 전 ② (기능 3, 4-2)
-
-```mermaid
----
-config:
-  class:
-    hideEmptyMembersBox: true
----
-classDiagram
-    direction LR
     class CloseStudentNotification["친해지고싶은학생알림"] {
         -모임ID: int
         -대상학생ID: int
@@ -301,23 +263,43 @@ classDiagram
         -순환배정실행(정렬학생목록: List~int~) List~int~
         -이전만남쌍교환조정(배치목록: List~int~) List~int~
     }
+    class StoreDB["가게DB"]
+    class PaymentDB["결제DB"]
+    class PaymentService["결제서비스"]
     class InterestRegistrationDB["관심등록DB"]
+    class MeetingDB["모임DB"]
     class ArrangementDB["배치DB"]
     class OwnerUI["사장님UI"]
     class ApplicationDB["신청DB"]
+    class SuspensionDB["정지DB"]
     class AttendanceDB["출석DB"]
     class ProfileDB["프로필DB"]
     class StudentUI["학생UI"]
+    MeetingNoticeRegistration -- StoreDB
+    PaymentAndApplicationConfirm -- PaymentDB
+    PaymentAndApplicationConfirm -- PaymentService
+    PaymentAndApplicationConfirm -- MeetingDB
+    PaymentAndApplicationConfirm -- ApplicationDB
+    PaymentAndApplicationConfirm -- ProfileDB
+    PaymentAndApplicationConfirm -- StudentUI
     CloseStudentNotification -- InterestRegistrationDB
+    MeetingNoticeRegistration -- MeetingDB
+    ApplicationCheckAndFeeCalc -- MeetingDB
+    MeetingNoticeRegistration -- OwnerUI
+    MeetingNoticeRegistration -- StudentUI
     SeatArrangementGeneration -- ArrangementDB
     SeatArrangementGeneration -- OwnerUI
+    ApplicationCheckAndFeeCalc -- ApplicationDB
     SeatArrangementGeneration -- ApplicationDB
+    ApplicationCheckAndFeeCalc -- SuspensionDB
+    ApplicationCheckAndFeeCalc -- ProfileDB
+    ApplicationCheckAndFeeCalc -- StudentUI
     SeatArrangementGeneration -- AttendanceDB
     SeatArrangementGeneration -- ProfileDB
     CloseStudentNotification -- StudentUI
 ```
 
-### 3.3 모임 중: 출석·교류 (기능 5, 6, 7, 8)
+### 3.2 ② 모임 현장 운영 (기능 5, 6, 7, 8, 18-1, 18-2)
 
 ```mermaid
 ---
@@ -361,66 +343,6 @@ classDiagram
         -현재단계: int
         +정보공개동의(학생ID: int, 모임ID: int, 테이블번호: int, 현재단계: int)
     }
-    class MeetingDB["모임DB"]
-    class ArrangementDB["배치DB"]
-    class OwnerUI["사장님UI"]
-    class OrderDB["주문DB"]
-    class QuestionCardDB["질문카드DB"]
-    class AttendanceDB["출석DB"]
-    class TableAttendanceStatus["테이블출석현황"]
-    class ProfileDB["프로필DB"]
-    class StudentUI["학생UI"]
-    SinglePersonTableMerge -- MeetingDB
-    SinglePersonTableMerge -- ArrangementDB
-    SinglePersonTableMerge -- OwnerUI
-    SinglePersonTableMerge -- TableAttendanceStatus
-    SinglePersonTableMerge -- ProfileDB
-    SinglePersonTableMerge -- StudentUI
-    QRAttendance -- ArrangementDB
-    QRAttendance -- OwnerUI
-    QRAttendance -- OrderDB
-    QRAttendance -- AttendanceDB
-    QRAttendance -- TableAttendanceStatus
-    QRAttendance -- StudentUI
-    BlindProfileDisclosure -- ArrangementDB
-    BlindProfileDisclosure -- TableAttendanceStatus
-    BlindProfileDisclosure -- ProfileDB
-    BlindProfileDisclosure -- StudentUI
-    ProfileTopicCard -- QuestionCardDB
-    ProfileTopicCard -- TableAttendanceStatus
-    ProfileTopicCard -- ProfileDB
-    ProfileTopicCard -- StudentUI
-```
-
-### 3.4 모임 중: 기부·품앗이·화장실 (기능 16, 17, 18-1, 18-2)
-
-```mermaid
----
-config:
-  class:
-    hideEmptyMembersBox: true
----
-classDiagram
-    direction LR
-    class DonationRelay["기부릴레이잇기"] {
-        -참여인원: int
-        +최종배치저장됨(모임ID: int)
-        +릴레이잇기선택(학생ID: int, 모임ID: int)
-        +기부참여거절선택(학생ID: int, 요청학생ID: int)
-        +기부참여선택(학생ID: int, 모임ID: int, 요청학생ID: int)
-        -참여인원계산(참여인원: int) int
-    }
-    class StoreFoodExchange["가게연합음식품앗이"] {
-        -교환ID: int
-        -모임ID: int
-        -상대모임ID: int
-        -학생ID: int
-        -상대학생ID: int
-        +음식품앗이등록제출(학생ID: int, 모임ID: int, 상대모임ID: int, 상대학생ID: int, 음식명: String, 수량: int)
-        +교환거절선택(교환ID: int)
-        +교환수락선택(교환ID: int)
-        +수령확인선택(학생ID: int, 교환ID: int)
-    }
     class ToiletWaitAndGroup["화장실대기등록및조편성"] {
         -기준시각: datetime
         -대기학생목록: List~화장실대기학생~
@@ -435,39 +357,48 @@ classDiagram
         +빈상태확인(모임ID: int)
     }
     class StoreDB["가게DB"]
-    class DonationDB["기부DB"]
     class MeetingDB["모임DB"]
     class ArrangementDB["배치DB"]
     class OwnerUI["사장님UI"]
     class OrderDB["주문DB"]
+    class QuestionCardDB["질문카드DB"]
     class AttendanceDB["출석DB"]
     class TableAttendanceStatus["테이블출석현황"]
-    class FoodExchangeDB["품앗이DB"]
+    class ProfileDB["프로필DB"]
     class StudentUI["학생UI"]
     class ToiletConfig["화장실구성"]
     class ToiletQueueDB["화장실대기열DB"]
     class ToiletQueueStatus["화장실대기열현황"]
     class ToiletWaitStudent["화장실대기학생"]
+    SinglePersonTableMerge -- MeetingDB
+    SinglePersonTableMerge -- ArrangementDB
+    SinglePersonTableMerge -- OwnerUI
+    SinglePersonTableMerge -- TableAttendanceStatus
+    SinglePersonTableMerge -- ProfileDB
+    SinglePersonTableMerge -- StudentUI
+    QRAttendance -- ArrangementDB
+    QRAttendance -- OwnerUI
+    QRAttendance -- OrderDB
+    QRAttendance -- AttendanceDB
+    QRAttendance -- TableAttendanceStatus
+    QRAttendance -- StudentUI
     ToiletWaitAndGroup -- StoreDB
     ToiletEntryExitManagement -- StoreDB
-    StoreFoodExchange -- MeetingDB
-    StoreFoodExchange -- OwnerUI
-    StoreFoodExchange -- OrderDB
-    StoreFoodExchange -- AttendanceDB
-    StoreFoodExchange -- FoodExchangeDB
-    StoreFoodExchange -- StudentUI
-    DonationRelay -- DonationDB
-    DonationRelay -- ArrangementDB
-    DonationRelay -- AttendanceDB
-    DonationRelay -- TableAttendanceStatus
-    DonationRelay -- StudentUI
     ToiletWaitAndGroup -- MeetingDB
     ToiletEntryExitManagement -- MeetingDB
+    BlindProfileDisclosure -- ArrangementDB
     ToiletWaitAndGroup -- ArrangementDB
+    BlindProfileDisclosure -- TableAttendanceStatus
+    BlindProfileDisclosure -- ProfileDB
+    BlindProfileDisclosure -- StudentUI
     ToiletEntryExitManagement -- OwnerUI
     ToiletWaitAndGroup -- OrderDB
+    ProfileTopicCard -- QuestionCardDB
     ToiletWaitAndGroup -- AttendanceDB
+    ProfileTopicCard -- TableAttendanceStatus
     ToiletWaitAndGroup -- TableAttendanceStatus
+    ProfileTopicCard -- ProfileDB
+    ProfileTopicCard -- StudentUI
     ToiletWaitAndGroup -- StudentUI
     ToiletEntryExitManagement -- StudentUI
     ToiletWaitAndGroup -- ToiletConfig
@@ -478,7 +409,7 @@ classDiagram
     ToiletEntryExitManagement -- ToiletQueueDB
 ```
 
-### 3.5 모임 후: 정산·평가·신고 (기능 9, 10, 11, 12, 13)
+### 3.3 ③ 모임 종료·사후 관리 (기능 9, 10, 11, 12, 13, 15, 19)
 
 ```mermaid
 ---
@@ -513,8 +444,23 @@ classDiagram
     class MannerSuspension["비매너학생이용정지"] {
         +신고심사(신고ID: int, 대상학생ID: int, 심사결과: 신고심사결과, 정지사유: String)
     }
+    class SafeReturnHome["당일안심귀가"] {
+        -모임종료시각: datetime
+        -귀가마감시각: datetime
+        +모임종료저장됨(모임ID: int)
+        +안전응답선택(학생ID: int)
+        -귀가마감시각계산(모임종료시각: datetime, 추정이동시간: int) datetime
+    }
+    class HangoverForecast["모임다음날숙취예보"] {
+        -모임종료시각: datetime
+        -숙취지수: int
+        +익일08시도달()
+        -숙취지수계산(술주문병수: int, 출석인원: int, 모임종료시각: datetime) int
+    }
+    class StoreDB["가게DB"]
     class PaymentDB["결제DB"]
     class InterestRegistrationDB["관심등록DB"]
+    class ReturnHomeTimeCalc["귀가시간계산"]
     class MeetingDB["모임DB"]
     class ArrangementDB["배치DB"]
     class ReportDB["신고DB"]
@@ -526,16 +472,29 @@ classDiagram
     class EvaluationDB["평가DB"]
     class ProfileDB["프로필DB"]
     class StudentUI["학생UI"]
+    class StudentEmergencyContact["학생비상연락정보"]
+    HangoverForecast -- StoreDB
     MannerSuspension -- PaymentDB
     AutoSettlement -- PaymentDB
     CloseStudentRegistration -- InterestRegistrationDB
+    SafeReturnHome -- ReturnHomeTimeCalc
+    SafeReturnHome -- MeetingDB
+    SafeReturnHome -- AttendanceDB
+    SafeReturnHome -- ProfileDB
+    SafeReturnHome -- StudentUI
+    SafeReturnHome -- StudentEmergencyContact
     MeetingEvaluation -- AttendanceDB
     MeetingEvaluation -- TableAttendanceStatus
     MeetingEvaluation -- EvaluationDB
     MeetingEvaluation -- ProfileDB
     MeetingEvaluation -- StudentUI
+    HangoverForecast -- MeetingDB
     MannerSuspension -- MeetingDB
     AutoSettlement -- MeetingDB
+    HangoverForecast -- ArrangementDB
+    HangoverForecast -- OrderDB
+    HangoverForecast -- TableAttendanceStatus
+    HangoverForecast -- StudentUI
     AutoSettlement -- ArrangementDB
     MannerReport -- ReportDB
     MannerReport -- TableAttendanceStatus
@@ -554,7 +513,7 @@ classDiagram
     CloseStudentRegistration -- StudentUI
 ```
 
-### 3.6 모임 후: 귀가·예보·2차 (기능 15, 19, 20)
+### 3.4 ④ 부가·연계 서비스 (기능 16, 17, 20)
 
 ```mermaid
 ---
@@ -564,18 +523,24 @@ config:
 ---
 classDiagram
     direction LR
-    class SafeReturnHome["당일안심귀가"] {
-        -모임종료시각: datetime
-        -귀가마감시각: datetime
-        +모임종료저장됨(모임ID: int)
-        +안전응답선택(학생ID: int)
-        -귀가마감시각계산(모임종료시각: datetime, 추정이동시간: int) datetime
+    class DonationRelay["기부릴레이잇기"] {
+        -참여인원: int
+        +최종배치저장됨(모임ID: int)
+        +릴레이잇기선택(학생ID: int, 모임ID: int)
+        +기부참여거절선택(학생ID: int, 요청학생ID: int)
+        +기부참여선택(학생ID: int, 모임ID: int, 요청학생ID: int)
+        -참여인원계산(참여인원: int) int
     }
-    class HangoverForecast["모임다음날숙취예보"] {
-        -모임종료시각: datetime
-        -숙취지수: int
-        +익일08시도달()
-        -숙취지수계산(술주문병수: int, 출석인원: int, 모임종료시각: datetime) int
+    class StoreFoodExchange["가게연합음식품앗이"] {
+        -교환ID: int
+        -모임ID: int
+        -상대모임ID: int
+        -학생ID: int
+        -상대학생ID: int
+        +음식품앗이등록제출(학생ID: int, 모임ID: int, 상대모임ID: int, 상대학생ID: int, 음식명: String, 수량: int)
+        +교환거절선택(교환ID: int)
+        +교환수락선택(교환ID: int)
+        +수령확인선택(학생ID: int, 교환ID: int)
     }
     class SecondRoundAutoDecision["2차참가자동결정"] {
         -모임ID: int
@@ -592,8 +557,8 @@ classDiagram
     class SecondNotice["2차공지"]
     class SecondNoticeDB["2차공지DB"]
     class SecondRecordDB["2차기록DB"]
-    class StoreDB["가게DB"]
     class ReturnHomeTimeCalc["귀가시간계산"]
+    class DonationDB["기부DB"]
     class MeetingDB["모임DB"]
     class ArrangementDB["배치DB"]
     class OwnerUI["사장님UI"]
@@ -603,9 +568,8 @@ classDiagram
     class ParticipationResponse["참가응답"]
     class AttendanceDB["출석DB"]
     class TableAttendanceStatus["테이블출석현황"]
-    class ProfileDB["프로필DB"]
+    class FoodExchangeDB["품앗이DB"]
     class StudentUI["학생UI"]
-    class StudentEmergencyContact["학생비상연락정보"]
     SecondRoundAutoDecision -- SecondNotice
     SecondRoundAutoDecision -- SecondNoticeDB
     SecondRoundAutoDecision -- SecondRecordDB
@@ -616,21 +580,20 @@ classDiagram
     SecondRoundAutoDecision -- ParticipationResponse
     SecondRoundAutoDecision -- AttendanceDB
     SecondRoundAutoDecision -- StudentUI
-    HangoverForecast -- StoreDB
-    SafeReturnHome -- ReturnHomeTimeCalc
-    SafeReturnHome -- MeetingDB
-    SafeReturnHome -- AttendanceDB
-    SafeReturnHome -- ProfileDB
-    SafeReturnHome -- StudentUI
-    SafeReturnHome -- StudentEmergencyContact
-    HangoverForecast -- MeetingDB
-    HangoverForecast -- ArrangementDB
-    HangoverForecast -- OrderDB
-    HangoverForecast -- TableAttendanceStatus
-    HangoverForecast -- StudentUI
+    StoreFoodExchange -- MeetingDB
+    StoreFoodExchange -- OwnerUI
+    StoreFoodExchange -- OrderDB
+    StoreFoodExchange -- AttendanceDB
+    StoreFoodExchange -- FoodExchangeDB
+    StoreFoodExchange -- StudentUI
+    DonationRelay -- DonationDB
+    DonationRelay -- ArrangementDB
+    DonationRelay -- AttendanceDB
+    DonationRelay -- TableAttendanceStatus
+    DonationRelay -- StudentUI
 ```
 
-### 3.7 공통 객체·외부
+### 3.5 공통 객체·외부
 
 ```mermaid
 classDiagram
@@ -658,7 +621,7 @@ classDiagram
     }
 ```
 
-### 3.8 DB: 회원·모임
+### 3.6 DB: 회원·모임
 
 ```mermaid
 classDiagram
@@ -714,7 +677,7 @@ classDiagram
     }
 ```
 
-### 3.9 DB: 모임 진행
+### 3.7 DB: 모임 진행
 
 ```mermaid
 classDiagram
@@ -776,7 +739,7 @@ classDiagram
     }
 ```
 
-### 3.10 DB: 평가·교류
+### 3.8 DB: 평가·교류
 
 ```mermaid
 classDiagram
@@ -815,7 +778,7 @@ classDiagram
     }
 ```
 
-### 3.11 사장님UI·엔티티
+### 3.9 사장님UI·엔티티
 
 ```mermaid
 classDiagram
@@ -877,7 +840,7 @@ classDiagram
     }
 ```
 
-### 3.12 학생UI
+### 3.10 학생UI
 
 ```mermaid
 classDiagram
@@ -943,7 +906,7 @@ classDiagram
     }
 ```
 
-### 3.13 공통 객체·DB·엔티티 사이의 관계선 (참고용)
+### 3.11 공통 객체·DB·엔티티 사이의 관계선 (참고용)
 
 ```mermaid
 ---
@@ -992,9 +955,9 @@ classDiagram
 
 StarUML에 옮길 때 그대로 적는 표기다 (CONVENTIONS 8.1, 8.2). 매개변수 이름을 빼고 자료형만 적으며, enum 타입(모임상태, 신청상태, 계정상태, 출석방식, 화장실상태, 화장실대기상태, 신고심사결과, 교환상태, 참가선택, 2차참가결과)은 `String`으로 적는다. 속성 이름, 엔티티 이름, `List<타입>`은 그대로 둔다. 순서는 3장 영역별 그림과 같다.
 
-같은 내용을 StarUML에 한 번에 만드는 스크립트가 `class-diagram/staruml-script.js`에 있다. StarUML에서 **File → New**로 빈 프로젝트를 연 뒤, 파일 내용 전체를 복사해 **Script Console**(아래 창) 입력줄에 붙여 넣고 Enter를 누른다. 클래스 54개, 관계선, 다이어그램 12개(1 통합, 2~12 PPT 슬라이드 순서)가 만들어진다. 배치는 격자로만 놓이므로 손으로 정리한다.
+같은 내용을 StarUML에 한 번에 만드는 스크립트가 `class-diagram/staruml-script.js`에 있다. StarUML에서 **File → New**로 빈 프로젝트를 연 뒤, 파일 내용 전체를 복사해 **Script Console**(아래 창) 입력줄에 붙여 넣고 Enter를 누른다. 클래스 54개, 관계선, 다이어그램 10개(1 통합, 2~10 PPT 슬라이드 순서)가 만들어진다. 배치는 격자로만 놓이므로 손으로 정리한다.
 
-### 4.1 담당 객체: 모임 전 ①
+### 4.1 담당 객체: ① 모임 생성·신청
 
 ```text
 모임공지등록
@@ -1028,8 +991,6 @@ StarUML에 옮길 때 그대로 적는 표기다 (CONVENTIONS 8.1, 8.2). 매개�
 -참가비일치검증(int, int): boolean
 ```
 
-### 4.2 담당 객체: 모임 전 ②
-
 ```text
 친해지고싶은학생알림
 -모임ID: int
@@ -1056,7 +1017,7 @@ StarUML에 옮길 때 그대로 적는 표기다 (CONVENTIONS 8.1, 8.2). 매개�
 -이전만남쌍교환조정(List<int>): List<int>
 ```
 
-### 4.3 담당 객체: 출석·교류
+### 4.2 담당 객체: ② 모임 현장 운영
 
 ```text
 QR출석
@@ -1100,31 +1061,6 @@ QR출석
 +정보공개동의(int, int, int, int)
 ```
 
-### 4.4 담당 객체: 기부·품앗이·화장실
-
-```text
-기부릴레이잇기
--참여인원: int
-+최종배치저장됨(int)
-+릴레이잇기선택(int, int)
-+기부참여거절선택(int, int)
-+기부참여선택(int, int, int)
--참여인원계산(int): int
-```
-
-```text
-가게연합음식품앗이
--교환ID: int
--모임ID: int
--상대모임ID: int
--학생ID: int
--상대학생ID: int
-+음식품앗이등록제출(int, int, int, int, String, int)
-+교환거절선택(int)
-+교환수락선택(int)
-+수령확인선택(int, int)
-```
-
 ```text
 화장실대기등록및조편성
 -기준시각: datetime
@@ -1142,7 +1078,7 @@ QR출석
 +빈상태확인(int)
 ```
 
-### 4.5 담당 객체: 정산·평가·신고
+### 4.3 담당 객체: ③ 모임 종료·사후 관리
 
 ```text
 자동정산
@@ -1179,8 +1115,6 @@ QR출석
 +신고심사(int, int, String, String)
 ```
 
-### 4.6 담당 객체: 귀가·예보·2차
-
 ```text
 당일안심귀가
 -모임종료시각: datetime
@@ -1198,6 +1132,31 @@ QR출석
 -숙취지수계산(int, int, datetime): int
 ```
 
+### 4.4 담당 객체: ④ 부가·연계 서비스
+
+```text
+기부릴레이잇기
+-참여인원: int
++최종배치저장됨(int)
++릴레이잇기선택(int, int)
++기부참여거절선택(int, int)
++기부참여선택(int, int, int)
+-참여인원계산(int): int
+```
+
+```text
+가게연합음식품앗이
+-교환ID: int
+-모임ID: int
+-상대모임ID: int
+-학생ID: int
+-상대학생ID: int
++음식품앗이등록제출(int, int, int, int, String, int)
++교환거절선택(int)
++교환수락선택(int)
++수령확인선택(int, int)
+```
+
 ```text
 2차참가자동결정
 -모임ID: int
@@ -1212,7 +1171,7 @@ QR출석
 -참가여부결정(double, double): String
 ```
 
-### 4.7 공통 객체·외부
+### 4.5 공통 객체·외부
 
 ```text
 귀가시간계산
@@ -1243,7 +1202,7 @@ QR출석
 +결제승인요청(int): boolean
 ```
 
-### 4.8 DB: 회원·모임
+### 4.6 DB: 회원·모임
 
 ```text
 프로필DB
@@ -1306,7 +1265,7 @@ QR출석
 +참가비전액환급저장(int, int)
 ```
 
-### 4.9 DB: 모임 진행
+### 4.7 DB: 모임 진행
 
 ```text
 관심등록DB
@@ -1375,7 +1334,7 @@ QR출석
 +퇴실처리및화장실비어있음갱신(int, datetime)
 ```
 
-### 4.10 DB: 평가·교류
+### 4.8 DB: 평가·교류
 
 ```text
 평가DB
@@ -1421,7 +1380,7 @@ QR출석
 +결과저장(int, List<참가결과>)
 ```
 
-### 4.11 사장님UI·엔티티
+### 4.9 사장님UI·엔티티
 
 ```text
 사장님UI
@@ -1498,7 +1457,7 @@ Point
 -방광게이지: double
 ```
 
-### 4.12 학생UI
+### 4.10 학생UI
 
 ```text
 학생UI
