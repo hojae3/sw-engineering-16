@@ -636,6 +636,7 @@ classDiagram
 classDiagram
     direction LR
     class ReturnHomeTimeCalc["귀가시간계산"] {
+        -지구반경: double = 6371
         -굴곡계수: double = 1.3
         -도보기준거리: double = 1.5
         -도보속도: double = 4
@@ -1215,6 +1216,7 @@ QR출석
 
 ```text
 귀가시간계산
+-지구반경: double = 6371
 -굴곡계수: double = 1.3
 -도보기준거리: double = 1.5
 -도보속도: double = 4
