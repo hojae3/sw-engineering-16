@@ -1,6 +1,6 @@
 # 2. 시퀀스 다이어그램 (3번 발표용)
 
-원본: [sequence/seq-03.md](../sequence/seq-03.md) (최성민, a13bd6e). 흐름(시작 방식, 메시지 7개, opt/loop 구조)은 원본 그대로 두고, 클래스 다이어그램 개념에 맞춰 **이름과 타입만** 바꿨다.
+원본: [sequence/seq-03.md](../../sequence/seq-03.md) (최성민, a13bd6e). 흐름(시작 방식, 메시지 7개, opt/loop 구조)은 원본 그대로 두고, 클래스 다이어그램 개념에 맞춰 **이름과 타입만** 바꿨다.
 
 ```mermaid
 sequenceDiagram
