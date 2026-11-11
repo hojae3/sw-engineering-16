@@ -12,10 +12,10 @@
 | 객체 | 종류 | 클래스 파일 |
 |---|---|---|
 | 친해지고싶은학생알림 | 담당 객체 | classes/CloseStudentNotification.md |
-| 관심등록DB | DB | classes/InterestRegistrationDB.md |
+| DB | DB | classes/InterestRegistrationDB.md |
 | 학생UI | UI | classes/StudentUI.md |
 
-시작 방식: **데이터 변화** (신청DB에 신청 상태 '결제완료'가 저장됨) → Found Message
+시작 방식: **데이터 변화** (DB에 신청 상태 '결제완료'가 저장됨) → Found Message
 
 ## 다이어그램
 
@@ -23,12 +23,12 @@
 sequenceDiagram
     participant Found as ●
     participant 알림 as 친해지고싶은학생알림
-    participant 관심DB as 관심등록DB
+    participant DB as DB
     participant 학생UI as 학생UI
 
     Found->>+알림: 1: 결제완료저장됨(학생ID: int, 모임ID: int)
-    알림->>관심DB: 2: 관심등록학생조회(학생ID: int): List<int>
-    관심DB-->>알림: 관심등록학생목록
+    알림->>DB: 2: 관심등록학생조회(학생ID: int): List<int>
+    DB-->>알림: 관심등록학생목록
 
     alt 관심등록 학생 없음
         알림-)학생UI: 3: 메시지알림(수신자ID: int, 메시지: String)
@@ -39,7 +39,7 @@ sequenceDiagram
         loop 발송 대상 학생마다
             알림-)학생UI: 6: 모임신청알림(학생ID: int, 모임ID: int)
         end
-        opt 알림을 선택한 경우
+        opt 개별 학생이 알림을 선택한 경우
             학생UI->>알림: 7: 알림선택(학생ID: int, 모임ID: int)
             알림-)학생UI: 8: 모임공지화면표시(모임ID: int)
         end
@@ -59,7 +59,7 @@ sequenceDiagram
 
 ## 메모
 
-- 1번 시작 메시지는 '2-2. 결제 및 신청 확정'에서 신청DB에 '결제완료' 상태가 저장될 때 발생하는 Found Message다.
+- 1번 시작 메시지는 '2-2. 결제 및 신청 확정'에서 DB에 '결제완료' 상태가 저장될 때 발생하는 Found Message다.
 - 4번 알림 확률 계산식은 $p = 1 / n$ (등록인원 $n$)이다.
 - 6번 모임신청알림은 알림 권한이 허용된 학생에게만 발송된다.
 - 7~8번은 알림을 수신한 학생이 알림을 눌러 해당 모임 공지 화면으로 이동하는 흐름이다. 알림을 누르지 않으면 아무 동작 없이 종료되므로 `opt`로 감쌌다.
