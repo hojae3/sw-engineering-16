@@ -325,3 +325,27 @@ B·C안으로 나눈다면 이렇게 나눌 수 있다 (예시):
 - (이름) :
 
 **결정:**
+
+---
+
+## 14. 권한 확인 빼기 (나중에 할 일)
+
+**상태:** 결정 (반영은 나중에)
+
+**배경:** 3번 발표 자료를 만들면서, "알림 권한이 허용된 학생에게만 발송"을 판단할 데이터(학생의 알림허용여부)가 시퀀스에 없다는 빈틈이 나왔다. 발표용 [presentation/03/2-sequence.md](presentation/03/2-sequence.md)에는 이미 반영했다.
+
+**결정:** 2026-11-12. 권한은 모든 학생이 이미 다 동의한 것으로 보고, 요구사항에서 권한 확인을 뺀다.
+
+**나중에 고칠 곳:**
+
+| 파일 | 위치 | 지금 | 고칠 내용 |
+|---|---|---|---|
+| requirements/req-03.md | Input | 알림 권한 허용 여부 | 삭제 |
+| requirements/req-03.md | Action 4, 5 | 알림 권한이 허용된 대상에게 / 허용되지 않은 학생은 제외 | 권한 조건 삭제. 확률 판정만 남긴다 |
+| requirements/req-03.md | Post-condition | 알림 권한을 허용한 학생에게 | 권한 조건 삭제 |
+| requirements/req-03.md | Pre-condition | — | "모든 학생은 알림 권한에 동의한 상태다" 추가 |
+| sequence/seq-03.md | 메모 | 5번 모임신청알림은 알림 권한이 허용된 학생에게만 발송된다 | 삭제 |
+| requirements/req-15.md | Input, Requirements, Pre-condition | 위치 권한 동의, 긴급 연락 동의 | 같은 방식으로 정리할지 확인 (이미 Pre-condition에서 동의를 전제함) |
+| requirements/req-20.md | Input, Pre-condition | 위치 권한 동의 | 같은 방식으로 정리할지 확인 (이미 Pre-condition에서 동의를 전제함) |
+| sequence/seq-20.md | 메모 | 위치 권한 동의는 Pre-condition에서 전제한다 | 15·20 정리 결과에 맞춘다 |
+| ASSUMED-FEATURES.md | 프로필 등록, 알림 권한 허용 여부 | 위치 권한·긴급 연락 동의, 알림 권한 허용 여부(3번) | 정리 결과에 맞춘다 |
