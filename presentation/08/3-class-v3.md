@@ -24,7 +24,7 @@ classDiagram
     class DB {
         +테이블 번호 목록 조회(int) List~int~
         +출석 학생 목록 조회(int, int) List~int~
-        +프로필 사진 조회(List~int~) List~String~
+        +프로필 사진 목록 조회(List~int~) List~String~
     }
     class 테이블종류 {
         <<enumeration>>
@@ -63,7 +63,7 @@ RULES는 담당 객체 속성을 원본 클래스 파일 그대로 쓰라고 하
 | 1 프로필 공개 시작 시각 도달 | 프로필공개 | + 프로필 공개 시작 시각 도달(int) |
 | 2 테이블 번호 목록 조회 | DB | + 테이블 번호 목록 조회(int): List<int> |
 | 3 출석 학생 목록 조회 | DB | + 출석 학생 목록 조회(int, int): List<int> |
-| 4 프로필 사진 조회 | DB | + 프로필 사진 조회(List<int>): List<String> |
+| 4 프로필 사진 목록 조회 | DB | + 프로필 사진 목록 조회(List<int>): List<String> |
 | 5 프로필 사진 표시 | 현장운영UI | + 프로필 사진 표시(int, List<String>) |
 
 메시지 5개 = 연산 5개, 클래스 5개.
