@@ -29,7 +29,7 @@ sequenceDiagram
         공개->>DB: 4: 프로필 사진 조회(학생ID목록: List<int>): List<String>
         DB-->>공개: 사진목록
         loop 같은 테이블 출석 학생마다
-            공개-)화면: 5: 프로필 사진 표시(학생ID: int, 학생ID목록: List<int>, 사진목록: List<String>)
+            공개-)화면: 5: 프로필 사진 표시(학생ID: int, 사진목록: List<String>)
         end
     end
     deactivate 공개
