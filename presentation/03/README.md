@@ -9,7 +9,7 @@
 |---|---|---|
 | 1 | [1-usecase.md](1-usecase.md) | ① 모임 생성·신청 단계 유스케이스 + 3번 한 장 |
 | 2 | [2-sequence.md](2-sequence.md) | 발표용 seq-03 + 원본과 달라진 점 |
-| 3 | [3-class.md](3-class.md) | 클래스 7개 + 메시지 ↔ 연산 대조표 |
+| 3 | [3-class.md](3-class.md) | 클래스 8개 + 메시지 ↔ 연산 대조표 |
 
 > 이 폴더는 발표용이라 원본(sequence/, classes/)과 다르다. 원본을 이 폴더에 맞출지는 팀에서 정한다.
 
@@ -17,8 +17,8 @@
 
 | # | 위치 | 내용 |
 |---|---|---|
-| 1 | seq-03 | [2-sequence.md](2-sequence.md) "원본과 달라진 점" 표대로 라이프라인 2개, 메시지 이름 3개, 2·4번 타입을 바꾼다 |
+| 1 | seq-03 | [2-sequence.md](2-sequence.md) "원본과 달라진 점" 표대로 라이프라인 2개, 메시지 이름 3개, 2·4번 타입을 바꾸고, 6번 뒤에 모임정보조회를 넣고 원본 7번을 모임신청화면표시(int, 모임정보)로 바꾼다 |
 | 2 | seq-03 참여 객체 표 | DB의 클래스 파일이 아직 `classes/InterestRegistrationDB.md`(관심등록DB)다 |
 | 3 | classes/CloseStudentNotification.md | 연산 이름·번호가 옛 시퀀스 기준이다 |
 | 4 | classes/StudentUI.md | `모임신청화면표시`가 없다 |
-| 5 | 전체 클래스 | 매칭·모임신청UI·UI·DB 하나·테이블종류·학생·사용자 클래스는 아직 classes/에 없다 (DISCUSSION 안건 7·8·9와 같이 정함) |
+| 5 | 전체 클래스 | 매칭·모임신청UI·UI·DB 하나·테이블종류·학생·사용자·모임정보 클래스는 아직 classes/에 없다 (DISCUSSION 안건 7·8·9와 같이 정함) |
