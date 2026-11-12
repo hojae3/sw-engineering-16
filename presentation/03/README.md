@@ -7,9 +7,10 @@
 
 | 순서 | 파일 | 내용 |
 |---|---|---|
-| 1 | [1-usecase.md](1-usecase.md) | ① 모임 생성·신청 단계 유스케이스 + 3번 한 장 |
+| 1 | [1-usecase.md](1-usecase.md) | ① 모임 생성·신청 단계 유스케이스 |
 | 2 | [2-sequence.md](2-sequence.md) | 발표용 seq-03 + 원본과 달라진 점 |
 | 3 | [3-class.md](3-class.md) | 클래스 6개 + 메시지 ↔ 연산 대조표 |
+| - | [staruml.js](staruml.js) | 위 1~3을 StarUML로 그리는 스크립트 (유스케이스 1장, 시퀀스 1장, 클래스 1장) |
 
 > 이 폴더는 발표용이라 원본(sequence/, classes/)과 다르다. 원본을 이 폴더에 맞출지는 팀에서 정한다.
 
