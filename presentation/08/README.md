@@ -11,6 +11,8 @@
 | 2 | [2-sequence.md](2-sequence.md) | 발표용 seq-08 + 원본과 달라진 점 |
 | 3 | [3-class.md](3-class.md) | 클래스 6개 + 메시지 ↔ 연산 대조표 |
 | - | [staruml.js](staruml.js) | 위 1~3을 StarUML로 그리는 스크립트 (유스케이스 1장, 시퀀스 1장, 클래스 1장) |
+| v2·v3 | [2-sequence-v2.md](2-sequence-v2.md), [2-sequence-v3.md](2-sequence-v3.md) | 검토용 시퀀스 초안 (화면 열기부터 / 버튼으로 다음 단계) |
+| v4 | [2-sequence-v4.md](2-sequence-v4.md), [3-class-v4.md](3-class-v4.md), [staruml-v4.js](staruml-v4.js) | 검토용: 스케줄러로 시작해 5분마다 자동 공개. 시퀀스·클래스(7개)·StarUML 스크립트 (유스케이스는 위와 같음) |
 
 > 이 폴더는 발표용이라 원본(sequence/, classes/)과 다르다. 원본을 이 폴더에 맞출지는 팀에서 정한다.
 
@@ -22,4 +24,4 @@
 | 2 | seq-08 3번, 9번 / classes/AttendanceDB.md, ArrangementDB.md | 발표용에서 `테이블출석조회` → 테이블 출석 학생 조회, `동의상태변경` → 현재 단계 동의 초기화로 바꿨다. 원본도 바꿀지 정한다 (원본은 공백 없이: `테이블출석학생조회`, `현재단계동의초기화`). `테이블출석조회`는 seq-05·07도 쓰므로 바꾸면 그 담당자에게도 알린다 (CONVENTIONS 6.4) |
 | 3 | seq-08 1번 | 학생UI가 보내는 `테이블번호`, `현재단계`를 화면이 어디서 받았는지 시퀀스에 없다. 테이블번호는 자리배치 결과, 현재단계는 8번 `프로필항목공개표시`의 단계(처음은 1)로 보이는데, 메모로 적어 두는 것을 제안한다 |
 | 4 | req-08 Action 1 | "배치DB에서 해당 테이블의 최종배치를 확인"하는 조회가 seq-08에 없다 |
-| 5 | 전체 클래스 | 현장운영UI·UI·DB 하나·테이블종류 클래스는 아직 classes/에 없다 (DISCUSSION 안건 8·9와 같이 정함) |
+| 5 | 전체 클래스 | 현장운영UI·학생UI «abstract»·DB 하나·테이블종류 클래스는 아직 classes/에 없다 (DISCUSSION 안건 8·9와 같이 정함) |

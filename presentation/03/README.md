@@ -25,4 +25,4 @@
 | 3-2 | classes/MeetingDB.md | `모임정보조회(모임ID: int): 모임정보` 연산이 없다 |
 | 4 | classes/CloseStudentNotification.md | 연산 이름·번호가 옛 시퀀스 기준이다 (예: `결제완료저장됨` ↔ 지금 메시지 `DB에 결제완료가 저장됨`) |
 | 5 | classes/StudentUI.md | `모임신청화면표시`가 없다 |
-| 6 | 전체 클래스 | 모임신청UI·UI·DB 하나·테이블종류·모임정보 클래스는 아직 classes/에 없다 (DISCUSSION 안건 8·9와 같이 정함) |
+| 6 | 전체 클래스 | 모임신청UI·학생UI «abstract»·DB 하나·테이블종류·모임정보 클래스는 아직 classes/에 없다 (DISCUSSION 안건 8·9와 같이 정함) |
