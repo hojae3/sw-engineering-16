@@ -9,7 +9,7 @@
 |---|---|---|
 | 1 | [1-usecase.md](1-usecase.md) | ① 모임 생성·신청 단계 유스케이스 + 3번 한 장 |
 | 2 | [2-sequence.md](2-sequence.md) | 발표용 seq-03 + 원본과 달라진 점 |
-| 3 | [3-class.md](3-class.md) | 클래스 8개 + 메시지 ↔ 연산 대조표 |
+| 3 | [3-class.md](3-class.md) | 클래스 5개 + 메시지 ↔ 연산 대조표 |
 
 > 이 폴더는 발표용이라 원본(sequence/, classes/)과 다르다. 원본을 이 폴더에 맞출지는 팀에서 정한다.
 
