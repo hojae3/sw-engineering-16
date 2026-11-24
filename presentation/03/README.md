@@ -18,11 +18,11 @@
 
 | # | 위치 | 내용 |
 |---|---|---|
-| 1 | seq-03 | [2-sequence.md](2-sequence.md) "원본과 달라진 점" 표대로 6번 뒤에 모임정보조회(모임ID: int): 모임정보를 넣고, 원본 7번을 모임신청화면표시(수신학생ID: int, 모임정보: 모임정보)로 바꾼다. 라이프라인(«module», 모임신청UI)은 DISCUSSION 안건 7·9와 같이 정한다 |
+| 1 | seq-03 | [2-sequence.md](2-sequence.md) "원본과 달라진 점" 표대로 6번 뒤에 모임정보조회(모임ID: int): 모임정보를 넣고, 원본 7번을 모임신청화면표시(수신학생ID: int, 모임정보: 모임정보)로 바꾼다. 라이프라인(«module», 모임신청UI)은 DISCUSSION 안건 15와 같이 정한다 |
 | 2 | req-03, seq-03 | 알림 권한 확인을 뺀다 (DISCUSSION 안건 14) |
 | 3 | seq-03 참여 객체 표 | DB의 클래스 파일이 아직 `classes/InterestRegistrationDB.md`(관심등록DB)다. 발표용은 DB 하나 + 테이블종류(관심등록, 모임) |
 | 3-1 | classes/InterestRegistrationDB.md | 연산 이름이 `관심등록학생조회(학생ID: int)`인데 지금 메시지는 `본 학생을 관심등록한 학생조회(결제학생ID: int)`다. 둘 중 하나로 맞춘다 |
 | 3-2 | classes/MeetingDB.md | `모임정보조회(모임ID: int): 모임정보` 연산이 없다 |
 | 4 | classes/CloseStudentNotification.md | 연산 이름·번호가 옛 시퀀스 기준이다 (예: `결제완료저장됨` ↔ 지금 메시지 `DB에 결제완료가 저장됨`) |
 | 5 | classes/StudentUI.md | `모임신청화면표시`가 없다 |
-| 6 | 전체 클래스 | 모임신청UI·학생UI «abstract»·DB 하나·테이블종류·모임정보 클래스는 아직 classes/에 없다 (DISCUSSION 안건 8·9와 같이 정함) |
+| 6 | 전체 클래스 | 모임신청UI·학생UI «abstract»·DB 하나·테이블종류·모임정보 클래스는 아직 classes/에 없다 (DISCUSSION 안건 15와 같이 정함) |
