@@ -12,8 +12,8 @@
 | 3 | [3-class.md](3-class.md) | 클래스 6개 + 메시지 ↔ 연산 대조표 |
 | - | [staruml.js](staruml.js) | 위 1~3을 StarUML로 그리는 스크립트 (유스케이스 1장, 시퀀스 1장, 클래스 1장) |
 | v2 | [2-sequence-v2.md](2-sequence-v2.md) | 검토용 시퀀스 초안 (화면 열기부터) |
-| v3 | [2-sequence-v3.md](2-sequence-v3.md), [3-class-v3.md](3-class-v3.md), [staruml-v3.js](staruml-v3.js) | 검토용: 스케줄러로 시작해 테이블마다 출석 학생끼리 사진 공개. "블라인드"를 뺀 이름(프로필공개). 시퀀스·클래스(5개)·StarUML 스크립트 |
-| v4 | [2-sequence-v4.md](2-sequence-v4.md), [3-class-v4.md](3-class-v4.md), [staruml-v4.js](staruml-v4.js) | 검토용: 스케줄러로 시작해 5분마다 자동 공개. 시퀀스·클래스(7개)·StarUML 스크립트 (유스케이스는 위와 같음) |
+| v3 | [2-sequence-v3.md](2-sequence-v3.md), [3-class-v3.md](3-class-v3.md), [staruml-v3.js](staruml-v3.js) | 검토용: 스케줄러로 시작해 테이블마다 출석 학생끼리 사진 공개. "블라인드"를 뺀 이름(프로필공개). 시퀀스·클래스(6개, 스케줄러 포함)·StarUML 스크립트 |
+| v4 | [2-sequence-v4.md](2-sequence-v4.md), [3-class-v4.md](3-class-v4.md), [staruml-v4.js](staruml-v4.js) | 검토용: 스케줄러로 시작해 5분마다 자동 공개. 시퀀스·클래스(8개, 스케줄러 포함)·StarUML 스크립트 (유스케이스는 위와 같음) |
 
 > 이 폴더는 발표용이라 원본(sequence/, classes/)과 다르다. 원본을 이 폴더에 맞출지는 팀에서 정한다.
 
