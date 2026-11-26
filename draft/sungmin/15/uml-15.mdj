@@ -122,11 +122,13 @@
 															"_parent": {
 																"$ref": "AAAAAAGiEkH7ycHHbJA="
 															},
-															"visible": false,
 															"font": "Arial;13;0",
 															"parentStyle": true,
-															"left": 572,
-															"height": 13
+															"left": 381,
+															"top": 45,
+															"width": 141,
+															"height": 13,
+															"text": "«module»"
 														},
 														{
 															"_type": "LabelView",
@@ -137,7 +139,7 @@
 															"font": "Arial;13;1",
 															"parentStyle": true,
 															"left": 381,
-															"top": 47,
+															"top": 60,
 															"width": 141,
 															"height": 13,
 															"text": "당일안심귀가"
@@ -245,11 +247,13 @@
 															"_parent": {
 																"$ref": "AAAAAAGiEkH7y8HcclE="
 															},
-															"visible": false,
 															"font": "Arial;13;0",
 															"parentStyle": true,
-															"left": 592,
-															"height": 13
+															"left": 581,
+															"top": 45,
+															"width": 141,
+															"height": 13,
+															"text": "«외부»"
 														},
 														{
 															"_type": "LabelView",
@@ -260,7 +264,7 @@
 															"font": "Arial;13;1",
 															"parentStyle": true,
 															"left": 581,
-															"top": 47,
+															"top": 60,
 															"width": 141,
 															"height": 13,
 															"text": "단말기위치정보"
@@ -1524,7 +1528,7 @@
 													"parentStyle": false,
 													"left": 535,
 													"top": 148,
-													"width": 209.11261718749998,
+													"width": 209.1126171875,
 													"height": 13,
 													"alpha": 1.5707963267948966,
 													"distance": 10,
@@ -1756,7 +1760,7 @@
 													"parentStyle": false,
 													"left": 457,
 													"top": 246,
-													"width": 189.59992187499998,
+													"width": 189.599921875,
 													"height": 13,
 													"alpha": 1.5707963267948966,
 													"distance": 10,
@@ -1988,7 +1992,7 @@
 													"parentStyle": false,
 													"left": 545,
 													"top": 314,
-													"width": 189.59992187499998,
+													"width": 189.599921875,
 													"height": 13,
 													"alpha": 1.5707963267948966,
 													"distance": 10,
@@ -2916,7 +2920,7 @@
 													"parentStyle": false,
 													"left": 1047,
 													"top": 972,
-													"width": 92.47874999999999,
+													"width": 92.47875,
 													"height": 13,
 													"alpha": 1.5707963267948966,
 													"distance": 10,
@@ -3803,6 +3807,7 @@
 										"$ref": "AAAAAAGiEkH7wcG3jeU="
 									},
 									"name": "당일안심귀가",
+									"stereotype": "module",
 									"represent": {
 										"$ref": "AAAAAAGiEkH7yMHE/C0="
 									},
@@ -3815,6 +3820,7 @@
 										"$ref": "AAAAAAGiEkH7wcG3jeU="
 									},
 									"name": "단말기위치정보",
+									"stereotype": "외부",
 									"represent": {
 										"$ref": "AAAAAAGiEkH7y8HZyjY="
 									},
