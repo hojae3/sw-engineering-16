@@ -25,8 +25,8 @@
 ```mermaid
 sequenceDiagram
     participant Found as ●
-    participant 안심 as 당일안심귀가
-    participant 위치 as 단말기위치정보
+    participant 안심 as «module» 당일안심귀가
+    participant 위치 as «외부» 단말기위치정보
     participant DB as DB
     participant 사후관리UI as 사후관리UI
     actor 학생
